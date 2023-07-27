@@ -5,6 +5,7 @@ app.set('view engine', 'ejs');
 app.set('views', './static')
 
 app.get('/', function (req, res) {
+    //test//
     res.render("index")
 }); 
 
