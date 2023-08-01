@@ -1,13 +1,16 @@
-var express = require('express'); 
-var app = express();
+var express = require('express');
+const session = require('express-session');
+var app = express()
 
-app.set('view engine', 'ejs');
+app.use(express.static('static'))
+
+app.set('view engine', 'ejs')
 app.set('views', './static')
 
 app.get('/', function (req, res) {
-    //test//
     res.render("index")
-}); 
+});
 
-app.use(express.static('content')); 
-app.listen(8080);
+app.listen(8080, () => {
+    console.log('Serveur démarré sur le port 8080');
+  });
