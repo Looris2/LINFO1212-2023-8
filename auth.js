@@ -10,7 +10,7 @@ module.exports = {
   salt,saltRounds
 }
 
-//fonction qui permet de checker si l'user entre les bonnes informations
+//checker si l'user entre les bonnes informations
 passport.use(new LocalStrategy(
   function (email, password, done) {
       getUser(email)
@@ -26,14 +26,15 @@ passport.use(new LocalStrategy(
           .catch(err => done(err));
   }  
 ));
-//fonction qui permet de serializer le mdp du user
+
+//serializer le mdp du user
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
     cb(null, user.id);
   });
 });
   
-  //fonction qui permet de deserializer le mdp du user
+  //deserializer le mdp du user
   passport.deserializeUser(function (id, done) {
     User.findByPk(id)
       .then(user => {
