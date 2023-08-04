@@ -20,6 +20,7 @@ module.exports = function (app, passport) {
     })
   });
 
+  //singup
   app.post('/signup', async function (req, res) {
     try{
       const { username, name, email } = req.body;
@@ -44,9 +45,10 @@ module.exports = function (app, passport) {
     };
   });
   
+  //login
   app.post('/login', passport.authenticate('local', { successRedirect:'/', failureRedirect: '/auth' }));
 
-
+  //logout
   app.get('/logout', function(req, res, next) {
     req.logout(function(err) {
       if (err) { return next("test",err); }
