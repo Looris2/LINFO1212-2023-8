@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/auth.css">
+    <link rel="stylesheet" href="/nav.css">
+    <title>Index</title>
+</head>
+<body>
+  <header>
+    <div class="logo">Belgoteek</div>
+    <div class="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="\" >Home</a></li>
+            <li><a href="" >Categories</a></li>
+            <li><a href="" >Contact</a></li>
+            <li>
+                <h4 id="name-holder">
+                    <% if (typeof user !== 'undefined') { %>
+                        <a><%= user.username %></a>
+                        <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
+                    <% } else { %>
+                        <a href="/auth">Login</a>
+                    <% } %>
+                  </h4>
+            </li>
+        </ul>
+        <script>
+            hamburger = document.querySelector(".hamburger");
+            hamburger.onclick = function() {
+                navBar = document.querySelector(".nav-bar")
+                navBar.classList.toggle("active");
+            }
+        </script>
+    </nav>
+</header>
+  <h1>Ajouter un nouvel utilisateur</h1>
+  <form action="signup" method="post">
+    <label for="username">Nom d'utilisateur:</label>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="name">Nom:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="password">Mot de passe:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <button type="submit">Créer l'utilisateur</button>
+  </form>
+  <form action="login" method="post">
+    <label for="username">Email:</label>
+    <input type="text" id="email" name="email" required><br>
+    
+    <label for="password">Mot de passe:</label>
+    <input type="password" id="password" name="password" required><br>
+    
+    <input type="submit" value="Se connecter">
+</form>
+</body>
+</html>

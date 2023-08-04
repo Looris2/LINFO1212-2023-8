@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 *{
   margin: 0;
   padding: 0;
   list-style: none;
   text-decoration: none;
-  font-family: "Google Sans Regular";
+  font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;
 }
 
@@ -18,7 +19,7 @@ header{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 100px;
+  padding: 0 45px;
 }
 
 .logo{

@@ -18,20 +18,33 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="" class="active">Home</a></li>
-                <li><a href="" >Categories</a></li>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/list" >Categories</a></li>
                 <li><a href="" >Contact</a></li>
-                <li><a href="" >Login</a></li>
+                <li>
+                    <h4 id="name-holder">
+                        <% if (typeof user !== 'undefined') { %>
+                            <a><%= user.username %></a>
+                            <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
+                        <% } else { %>
+                            <a href="/auth">Login</a>
+                        <% } %>
+                      </h4>
+                </li>
             </ul>
+            <script>
+                hamburger = document.querySelector(".hamburger");
+                hamburger.onclick = function() {
+                    navBar = document.querySelector(".nav-bar")
+                    navBar.classList.toggle("active");
+                }
+            </script>
         </nav>
     </header>
 
-    <script>
-        hamburger = document.querySelector(".hamburger");
-        hamburger.onclick = function() {
-            navBar = document.querySelector(".nav-bar")
-            navBar.classList.toggle("active");
-        }
-    </script>
+    <div class="page">
+
+    </div>
+
 </body>
 </html>
