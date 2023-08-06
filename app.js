@@ -51,10 +51,6 @@ app.post('/auth', (req, res) => {
     req.session.id = db.User.id;
   });
 
-app.get('/list', function (req, res) {
-    res.render(path.join(__dirname, 'static/list.ejs'));
-});
-
 app.get('/auth', function (req, res) {
     res.render(path.join(__dirname, 'static/auth.ejs'));
 });

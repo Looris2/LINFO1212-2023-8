@@ -12,31 +12,31 @@ module.exports = {
 
 //checker si l'user entre les bonnes informations
 passport.use(new LocalStrategy(
-  function (email, password, done) {
-      getUser(email)
-          .then(function (user) {
-              if (!user) {
-                  return done(null, false, { message: 'Adresse e-mail incorrecte.' });
-              }
-              if (bcrypt.compareSync(password, user.password)) {
-                return done(null, user);
-              }
-              return done(null, false, { message: 'Mot de passe incorrect.' });
-          })
-          .catch(err => done(err));
-  }  
+  { usernameField: 'email' }, // Spécifiez que le champ 'email' est utilisé comme nom d'utilisateur
+  async function (email, password, done) {
+    try {
+      const user = await getUser(email);
+      if (!user) {
+        return done(null, false, { message: 'Adresse e-mail incorrecte.' });
+      }
+      if (bcrypt.compareSync(password, user.password)) {
+        return done(null, user);
+      }
+      return done(null, false, { message: 'Mot de passe incorrect.' });
+    } catch (err) {
+      return done(err);
+    }
+  }
 ));
 
 //serializer le mdp du user
 passport.serializeUser(function (user, cb) {
-  process.nextTick(function () {
-    cb(null, user.id);
-  });
+  cb(null, user.email);
 });
   
   //deserializer le mdp du user
-  passport.deserializeUser(function (id, done) {
-    User.findByPk(id)
+  passport.deserializeUser(function (email, done) {
+    User.findOne({ where: { email } })
       .then(user => {
         done(null, user);
       })

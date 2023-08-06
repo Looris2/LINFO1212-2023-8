@@ -20,6 +20,7 @@ const User = sequelize.define('User', {
       validate: {
         isEmail: true,
       },
+      unique: true,
       primaryKey: true,
     },
     password: {
@@ -31,20 +32,20 @@ const User = sequelize.define('User', {
 
 module.exports = {
   getUser: async function (email) {
-    return await User.findOne({where: { email:email }});
+    return await User.findOne({where: { email: email }});
   },
+  User,
+  sequelize
 };
 
 (async () => {
   try {
      await sequelize.authenticate();
      console.log('Connection to the database has been established successfully.');
-     await sequelize.sync({ force: false });
+     await sequelize.sync({ force: false });//mettre true pour que la table soit réinitialisée 
      console.log('User table synced successfully.');
     }catch (error) {
       console.error('Unable to connect to the database:', error);
     }
   })
   ();
-
-  module.exports = {User ,sequelize};
