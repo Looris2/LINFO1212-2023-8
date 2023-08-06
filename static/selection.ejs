@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/selection.css">
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
@@ -18,13 +18,13 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="/selection" >Ma selection</a></li>
+                <li><a href="/" >Home</a></li>
+                <li><a href="" class="active">Ma selection</a></li>
                 <li><a href="" >Explorer</a></li>
                 <li><a href="" >Contact</a></li>
                 <li>
                     <h4 id="name-holder">
-                        <% if (typeof user !== 'undefined') { %>
+                        <% if ( typeof user !== 'undefined') { %>
                             <a><%= user.username %></a>
                             <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
                         <% } else { %>
@@ -44,7 +44,11 @@
     </header>
 
     <div class="page">
-
+        <% if(user){ %>
+            <h1>Bienvenue <%= user.username %>!</h1>
+        <% }else{ %>
+            <h1>Bienvenue!</h1>
+        <% } %>
     </div>
 
 </body>

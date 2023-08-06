@@ -31,28 +31,21 @@ app.use(passport.session());
 require('./authroutes.js')(app, passport);
 
 app.get('/', function (req, res) {
-    if (req.isAuthenticated()) {
-        res.locals.user = req.user;
-      }
-    var id = res.locals.user;
-    if (id == undefined){
-        id += 0;
-    }else{
-        id += res.locals.user.dataValues.id;
-    }
-    //on trouve le user qui est connecté
-    var userid = id[31];
-    userid = parseInt(userid);
-
+    res.locals.user = req.user;
     res.render(path.join(__dirname, 'static/index.ejs'));
 });
 
 app.post('/auth', (req, res) => {
-    req.session.id = db.User.id;
+    req.session.email = db.User.email;
   });
 
 app.get('/auth', function (req, res) {
     res.render(path.join(__dirname, 'static/auth.ejs'));
+});
+
+app.get('/selection', function (req, res) {
+     res.locals.user = req.user;
+    res.render(path.join(__dirname, 'static/selection.ejs'));
 });
 
 app.listen(8080, () => {
