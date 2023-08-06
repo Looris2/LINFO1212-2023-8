@@ -21,7 +21,7 @@
                 <li><a href="/" >Home</a></li>
                 <li><a href="" class="active">Ma selection</a></li>
                 <li><a href="" >Explorer</a></li>
-                <li><a href="" >Contact</a></li>
+                <li><a href="#basdepage" >Contact</a></li>
                 <li>
                     <h4 id="name-holder">
                         <% if ( typeof user !== 'undefined') { %>
@@ -46,8 +46,22 @@
     <div class="page">
         <% if(user){ %>
             <h1>Bienvenue <%= user.username %>!</h1>
+            <footer>
+                <a name="basdepage"></a>
+                <ul>
+                    <li>Antonios Tarnanas: antonios.tarnanas@student.uclouvain.be</li>
+                    <li>Loris Dognaux: loris.dognaux@student.uclouvain.be</li>
+                </ul>
+            </footer>
         <% }else{ %>
             <h1>Bienvenue!</h1>
+            <footer>
+                <a name="basdepage"></a>
+                <ul>
+                    <li>Antonios Tarnanas: antonios.tarnanas@student.uclouvain.be</li>
+                    <li>Loris Dognaux: loris.dognaux@student.uclouvain.be</li>
+                </ul>
+            </footer>
         <% } %>
     </div>
 
