@@ -44,7 +44,39 @@
     </header>
 
     <div class="page">
+        <% if(user){ %>
+            <div class="box">
+                <div class="cadre-left">
+                    <div class="welcome-message">
+                        <h1>Bienvenue <%= user.username %> !</h1>
+                    </div>
+                    <di class="stats">
+                        <h2>Vos statistiques :</h2>
+                        <div class="cadre-on">
+                           <ul>
+                                <li>Livres : 3</li>
+                                <li>Aimés : 2</li>
+                                <li>Finis : 3</li>
+                                <li>En attente : 10</li>
+                            </ul>
+                        </div>
+                    </di>
+                </div>
+                <div class="cadre-right">
+                    <h1>Belgoteek</h1>
+                </div>
+            </div>
+        <% }else{ %>
+            <div class="page">
+                <div class="box">
+                    <div class="container">
+                        <h1>Veuillez vous connecter afin de voir votre selection de livres</h1>
 
+                        <a href="/auth">Connexion</a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
     </div>
 
 </body>

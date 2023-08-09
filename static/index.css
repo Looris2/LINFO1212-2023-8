@@ -1,11 +1,17 @@
 *{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  --color-primary: #AA2A2A;
+  --color-primary-dark: #b0050bfe;
+  --color-secondary: #36478d;
+  --color-error: #e21111;
+  --color-success: #37d85a;
+  --border-radius: 4px;
+}
 
   html, body {
     margin: 0;
@@ -14,16 +20,108 @@
 }
 
   .page {
-    background-color: #000000;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, .3)), url(images/bibli.jpg);
-    background-position: center;
-    background-size: cover;
-    color: #ffffff;
-    padding: 1em;
-    text-align: center;
+
     margin: 0 auto;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    height: 100%;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, .3)), url(images/bibli.jpg);
+    background-size: cover;
   }
+
+  .box {
+    padding-top: 50px;
+    position: relative;
+    border-color: #36478d;
+    
+    margin: 5rem;
+}
+
+.cadre-left{
+  position: relative;
+  float: left;
+
+  display: flex;
+  flex-direction: column;
+  align-items:left;
+  justify-content: flex-start;
+  width: 900px;
+  height: 500px;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #ffffff;
+}
+
+.welcome-message {
+  color:#ffffff;
+  background-color: #AA2A2A;
+  width: 350px;
+  padding: 10px;
+  text-align: left;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.cadre-right{
+  position: relative;
+  float: right;
+  vertical-align: middle;
+
+  width: 150px;
+  height: 500px;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #ffffff;
+}
+
+.cadre-right h1 {
+  writing-mode: vertical-lr;
+
+  transform-origin: center;
+  -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: vertical-lr;
+}
+
+.cadre-on{
+  background-color: #AA2A2A;
+  height: 100px;
+  width: auto;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+
+}
+
+.cadre-on ul {
+  display: flex;
+  padding-top: 40px;
+}
+
+.cadre-on ul li{
+  display: inline-flex;
+  margin: 0 3rem;
+  color: #ffffff;
+  font-weight: bold; /* Ajout du style en gras */
+}
+
+.stats{
+  padding-top: 175px;
+}
+
+.stats h2{
+  padding: 20px;
+}
   
