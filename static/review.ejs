@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/review.css">
+    <link rel="stylesheet" href="/nav.css">
+    <title>Index</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">Belgoteek</div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/selection">Ma selection</a></li>
+                <li><a href="/explore">Explorer</a></li>
+                <li><a href="">Contact</a></li>
+                <li>
+                    <h4 id="name-holder">
+                        <% if (typeof user !=='undefined' ) { %>
+                            <a>
+                                <%= user.username %>
+                            </a>
+                            <ul>
+                                <li><button onclick='location.href="/logout"'>Déconnexion</button></li>
+                            </ul>
+                            <% } else { %>
+                                <a href="/auth">Login</a>
+                                <% } %>
+                    </h4>
+                </li>
+            </ul>
+            <script>
+                hamburger = document.querySelector(".hamburger");
+                hamburger.onclick = function () {
+                    navBar = document.querySelector(".nav-bar")
+                    navBar.classList.toggle("active");
+                }
+            </script>
+        </nav>
+    </header>
+
+    <div class="page">
+        <% if(user){ %>
+            <div class="box">
+                <div class="container">
+                <h1 class="review__title">Suggérer un nouveau livre</h1>
+                    <form method="post">
+
+                        <label for="title">Titre:</label>
+                        <input class="review__input" type="text" id="formfield" placeholder="Titre du livre" name="title" required><br>
+
+                        <label for="author">Auteur:</label>
+                        <input class="review__input" type="text" id="formfield" placeholder="Auteur" name="author" required><br>
+
+                        <label for="desc">Description:</label>
+                        <input class="review__input__desc" type="text" id="formfield" placeholder="Mots-clés" name="desc" maxlength ="" required><br>
+                        <br>
+
+                        <select name="gnr" id="genre" class="top  review__select" required>
+                            <div class="select-list">
+                              <option value="">Choissisez un genre</option>
+                              <option value="Roman">Roman</option>
+                              <option value="Aventure">Aventure</option>
+                              <option value="Fiction">Science-fiction</option>
+                              <option value="Horreur">Horreur</option>
+                              <option value="Biographie">Biographie</option>
+                              <option value="Auto">Auto-Biographie</option>
+                              
+                            </div><br>
+                          </select><br>
+                          <br>
+                        <button class="review__button" type="submit">Suggérer le livre</button>
+                    </form>
+                </div>
+                </div>
+            <% }else{ %>
+
+                <% } %>
+    </div>
+
+</body>
+
+</html>

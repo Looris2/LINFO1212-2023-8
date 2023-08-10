@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/explore.css">
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
@@ -18,9 +18,9 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/selection" >Ma selection</a></li>
-                <li><a href="/explore" >Explorer</a></li>
+                <li><a href="" class="active" >Explorer</a></li>
                 <li><a href="" >Contact</a></li>
                 <li>
                     <h4 id="name-holder">
@@ -45,38 +45,9 @@
 
     <div class="page">
         <% if(user){ %>
-            <div class="box">
-                <div class="cadre-left">
-                    <div class="welcome-message">
-                        <h1>Bienvenue <%= user.username %> !</h1>
-                    </div>
-                    <h2>Cliquer sur <a href="/review">"Review"</a>afin d'ajouter un nouveau livre a la bibliotheque</h2>
-                    <di class="stats">
-                        <h2>Vos statistiques :</h2>
-                        <div class="cadre-on">
-                           <ul>
-                                <li>Livres : 3</li>
-                                <li>Aimés : 2</li>
-                                <li>Finis : 3</li>
-                                <li>En attente : 10</li>
-                            </ul>
-                        </div>
-                    </di>
-                </div>
-                <div class="cadre-right">
-                    <h1>Belgoteek</h1>
-                </div>
-            </div>
-        <% }else{ %>
-            <div class="page">
-                <div class="box">
-                    <div class="container">
-                        <h1>Veuillez vous connecter afin de voir votre selection de livres</h1>
 
-                        <a href="/auth">Connexion</a>
-                    </div>
-                </div>
-            </div>
+        <% }else{ %>
+
         <% } %>
     </div>
 

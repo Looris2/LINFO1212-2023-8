@@ -30,9 +30,35 @@ const User = sequelize.define('User', {
   }, 
 {});
 
+const Book = sequelize.define('Book', {
+  title: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: false
+  },
+  author: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: false
+  },
+  summary: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: false,
+  },
+  category: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: false
+  }
+}, 
+{});
+
+
+
 module.exports = {
   getUser: async function (email) {
     return await User.findOne({where: { email: email }});
+  },
+  pushBook: async function (title, author, desc, gnr, email) {
+    const newBook = await Book.create({ title: title, author: author, summary: desc,category: gnr, Email: email});
+    console.log('New Song was saved to the database!');
   },
   User,
   sequelize

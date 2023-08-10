@@ -36,7 +36,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/auth', (req, res) => {
-    req.session.email = db.User.email;
+    req.session.id = user.id;
   });
 
 app.get('/auth', function (req, res) {
@@ -46,6 +46,21 @@ app.get('/auth', function (req, res) {
 app.get('/selection', function (req, res) {
      res.locals.user = req.user;
     res.render(path.join(__dirname, 'static/selection.ejs'));
+});
+
+app.get('/explore', function (req, res) {
+    res.locals.user = req.user;
+   res.render(path.join(__dirname, 'static/explore.ejs'));
+});
+
+app.post('/review',(req, res) =>{
+    db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email);
+    res.redirect("/");
+ });
+
+app.get('/review', function (req, res) {
+    res.locals.user = req.user;
+   res.render(path.join(__dirname, 'static/review.ejs'));
 });
 
 app.listen(8080, () => {
