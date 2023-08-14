@@ -50,8 +50,20 @@
     </header>
 
     <div class="page">
-        
-    </div>
+        <% if (typeof user !== 'undefined' && user.role === 'bibliothécaire') { %>
+          <h2>Suggestions de Livres</h2>
+          <% books.forEach(book => { %>
+            <div class="book-suggestion">
+              <h3><%= book.title %></h3>
+              <p><%= book.summary %></p>
+              <form method="post" action="/review">
+                <input type="hidden" name="bookId" value="<%= book.id %>">
+                <button type="submit">Valider</button>
+              </form>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
 
 </body>
 

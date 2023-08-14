@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
+
 <body>
     <header>
         <div class="logo">Belgoteek</div>
@@ -19,23 +21,27 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/selection" >Ma selection</a></li>
-                <li><a href="" class="active" >Explorer</a></li>
-                <li><a href="" >Contact</a></li>
+                <li><a href="/selection">Ma selection</a></li>
+                <li><a href="" class="active">Explorer</a></li>
+                <li><a href="">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
-                        <% if (typeof user !== 'undefined') { %>
-                            <a><%= user.username %></a>
-                            <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
-                        <% } else { %>
-                            <a href="/auth">Login</a>
-                        <% } %>
-                      </h4>
+                        <% if (typeof user !=='undefined' ) { %>
+                            <a>
+                                <%= user.username %>
+                            </a>
+                            <ul>
+                                <li><button onclick='location.href="/logout"'>Déconnexion</button></li>
+                            </ul>
+                            <% } else { %>
+                                <a href="/auth">Login</a>
+                                <% } %>
+                    </h4>
                 </li>
             </ul>
             <script>
                 hamburger = document.querySelector(".hamburger");
-                hamburger.onclick = function() {
+                hamburger.onclick = function () {
                     navBar = document.querySelector(".nav-bar")
                     navBar.classList.toggle("active");
                 }
@@ -46,10 +52,22 @@
     <div class="page">
         <% if(user){ %>
 
-        <% }else{ %>
-
-        <% } %>
+            <% }else{ %>
+                <% books.forEach(book=> { %>
+                    <div class="book">
+                        <h2>
+                            <%= book.title %>
+                        </h2>
+                        <p>Auteur: <%= book.author %>
+                        </p>
+                        <p>Résumé: <%= book.summary %>
+                        </p>
+                        <p>Catégorie: <%= book.category %>
+                        </p>
+                    </div>
+                    <% }) %>
     </div>
 
 </body>
+
 </html>

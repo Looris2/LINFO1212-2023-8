@@ -18,7 +18,7 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" class="active">Accueil</a></li>
+                <li><a href="/" class="active">Home</a></li>
                 <li><a href="/selection">Ma sélection</a></li>
                 <li><a href="/explore">Explorer</a></li>
                 <li><a href="">Contact</a></li>
@@ -28,7 +28,7 @@
                             <a><%= user.username %></a>
                             <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
                         <% } else { %>
-                            <a href="/auth">Connexion</a>
+                            <a href="/auth">Login</a>
                         <% } %>
                     </h4>
                 </li>
@@ -67,7 +67,7 @@
                     <h2>Bibliothécaire</h2>
                     <br>
                     <form action="/" method="POST">
-                        <label for="password">Si vous etes bibliothécaire, entrez le mot de passe :</label><br>
+                        <label for="password">Si vous travaillez comme bibliothécaire, saisissez votre mot de passe :</label><br>
                         <br>
                         <input class="index__input" type="password" name="password" id="password" required><br>
                         <br>
@@ -96,6 +96,8 @@
                 </div>
                 <div class="cadre-right">
                     <h1>Belgoteek</h1>
+                    <br>
+                    <h2>Cliquez<a href="/admin">ici</a>pour que vous soyez rediriger sur la page admin</h2>
                 </div>
             </div>
         <% } else { %>

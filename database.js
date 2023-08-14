@@ -70,6 +70,7 @@ module.exports = {
     const newBook = await Book.create({ title: title, author: author, summary: desc,category: gnr, Email: email});
     console.log('New Song was saved to the database!');
   },
+  Book,
   User,
   sequelize
 };
