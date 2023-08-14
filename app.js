@@ -54,14 +54,27 @@ app.get('/explore', function (req, res) {
 });
 
 app.post('/review',(req, res) =>{
-    db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email);
-    res.redirect("/");
+    if (req.user.role === 'normal') {
+        res.redirect("/");
+      } else if (req.user.role === 'bibliothécaire') {
+        db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email);
+      }
  });
 
 app.get('/review', function (req, res) {
     res.locals.user = req.user;
    res.render(path.join(__dirname, 'static/review.ejs'));
 });
+
+app.post('/', async (req, res) => {
+    if (req.isAuthenticated() && req.body.password === "belgoteek") {
+        await db.User.update({ role: 'bibliothécaire' }, { where: { email: req.user.email } });
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
+});
+  
 
 app.listen(8080, () => {
     console.log('Serveur démarré sur le port 8080');

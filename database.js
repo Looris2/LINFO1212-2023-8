@@ -26,6 +26,11 @@ const User = sequelize.define('User', {
     password: {
       type: Sequelize.DataTypes.STRING,
       allowNull: false
+    },
+    role: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'normal' // Par défaut, un utilisateur est "normal"
     }
   }, 
 {});
@@ -46,6 +51,11 @@ const Book = sequelize.define('Book', {
   category: {
     type: Sequelize.DataTypes.STRING,
     allowNull: false
+  },
+  validated: {
+    type: Sequelize.DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false 
   }
 }, 
 {});

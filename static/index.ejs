@@ -18,63 +18,91 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="/selection" >Ma selection</a></li>
-                <li><a href="/explore" >Explorer</a></li>
-                <li><a href="" >Contact</a></li>
+                <li><a href="/" class="active">Accueil</a></li>
+                <li><a href="/selection">Ma sélection</a></li>
+                <li><a href="/explore">Explorer</a></li>
+                <li><a href="">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
                         <% if (typeof user !== 'undefined') { %>
                             <a><%= user.username %></a>
                             <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
                         <% } else { %>
-                            <a href="/auth">Login</a>
+                            <a href="/auth">Connexion</a>
                         <% } %>
-                      </h4>
+                    </h4>
                 </li>
             </ul>
             <script>
-                hamburger = document.querySelector(".hamburger");
+                const hamburger = document.querySelector(".hamburger");
                 hamburger.onclick = function() {
-                    navBar = document.querySelector(".nav-bar")
+                    const navBar = document.querySelector(".nav-bar");
                     navBar.classList.toggle("active");
-                }
+                };
             </script>
         </nav>
     </header>
 
     <div class="page">
-        <% if(user){ %>
+        <% if(user && user.role === 'normal') { %>
             <div class="box">
                 <div class="cadre-left">
                     <div class="welcome-message">
                         <h1>Bienvenue <%= user.username %> !</h1>
                     </div>
-                    <h2>Cliquer sur <a href="/review">"Review"</a>afin d'ajouter un nouveau livre a la bibliotheque</h2>
-                    <di class="stats">
+                    <h2>Cliquez sur <a href="/review">"Review"</a> afin de suggérer un nouveau livre à la bibliothèque</h2>
+                    <div class="stats">
                         <h2>Vos statistiques :</h2>
                         <div class="cadre-on">
-                           <ul>
+                            <ul>
                                 <li>Livres : 3</li>
                                 <li>Aimés : 2</li>
                                 <li>Finis : 3</li>
                                 <li>En attente : 10</li>
                             </ul>
                         </div>
-                    </di>
+                    </div>
+                </div>
+                <div class="cadre-right">
+                    <h2>Bibliothécaire</h2>
+                    <br>
+                    <form action="/" method="POST">
+                        <label for="password">Si vous etes bibliothécaire, entrez le mot de passe :</label><br>
+                        <br>
+                        <input class="index__input" type="password" name="password" id="password" required><br>
+                        <br>
+                        <button class="index__button" type="submit">Confirmer</button>
+                    </form>
+                </div>
+            </div>
+        <% } else if(user && user.role === 'bibliothécaire') { %>
+            <div class="box">
+                <div class="cadre-left">
+                    <div class="welcome-message">
+                        <h1>Bienvenue <%= user.username %> !</h1>
+                    </div>
+                    <h2>Cliquez sur <a href="/review">"Review"</a> afin de suggérer un nouveau livre à la bibliothèque</h2>
+                    <div class="stats">
+                        <h2>Vos statistiques :</h2>
+                        <div class="cadre-on">
+                            <ul>
+                                <li>Livres : 3</li>
+                                <li>Aimés : 2</li>
+                                <li>Finis : 3</li>
+                                <li>En attente : 10</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="cadre-right">
                     <h1>Belgoteek</h1>
                 </div>
             </div>
-        <% }else{ %>
-            <div class="page">
-                <div class="box">
-                    <div class="container">
-                        <h1>Veuillez vous connecter afin de voir votre selection de livres</h1>
-
-                        <a href="/auth">Connexion</a>
-                    </div>
+        <% } else { %>
+            <div class="box">
+                <div class="container">
+                    <h1>Veuillez vous connecter afin de voir votre sélection de livres</h1>
+                    <a href="/auth">Connexion</a>
                 </div>
             </div>
         <% } %>
