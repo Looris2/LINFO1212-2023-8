@@ -75,7 +75,7 @@ app.get('/review', async function (req, res) {
     } else if (req.user.role === 'bibliothécaire') {
       // Bibliothécaire valide un livre
       const bookId = req.body.bookId;
-      await db.pushBook(req.body.title, req.body.author, req.body.summary, req.body.category, req.user.email, true);
+      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email, true);
       res.redirect("/admin");
     }
   });
