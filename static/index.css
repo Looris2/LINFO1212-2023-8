@@ -40,6 +40,40 @@
     margin: 5rem;
 }
 
+.container{
+  position:flex;
+  float: left;
+  vertical-align:bottom;
+
+  width:auto;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color:#ac2e33fe;
+}
+
+.lettreBlanc {
+  color: #ffffff;
+}
+
+.button{
+  width: 100%;
+  padding: 0.1rem 0.2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  outline:none;
+  border-radius: 1%;
+  border-color: #ffffff;
+  cursor: pointer;
+  background: #ac2e33fe;
+}
+
+.button:hover{
+  background: var(--color-primary-dark);
+}
+
 .cadre-left{
   position: relative;
   float: left;
