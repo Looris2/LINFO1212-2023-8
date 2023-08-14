@@ -20,8 +20,8 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="/selection">Ma selection</a></li>
+                <li><a href="/" >Home</a></li>
+                <li><a href="/selection">Liste</a></li>
                 <li><a href="/explore">Explorer</a></li>
                 <li><a href="">Contact</a></li>
                 <li>
@@ -50,22 +50,25 @@
     </header>
     <div class="page">
         <div class="container-list">
-            <div class="container">
-                <% if (typeof user !== 'undefined' && user.role === 'bibliothécaire') { %>
-                <h2>Suggestions de Livres</h2>
-                <% books.forEach(book => { %>
-                    <div class="book-suggestion">
-                    <h3><%= book.title %></h3>
-                    <p><%= book.summary %></p>
-                    <form method="post" action="/review">
-                        <input type="hidden" name="bookId" value="<%= book.id %>">
-                        <button type="submit">Valider</button>
-                    </form>
+            <h1>Suggestions de Livres</h1>
+            <% if (typeof user !=='undefined' && user.role==='bibliothécaire' ) { %>
+                <% books.forEach(book=> { %>
+                    <div class="container">
+                        <h2><%= book.title %></h2>
+                        <p><%= book.author %></p>
+                        <br>
+                        <h3><%= book.summary %></h3>
+                        <br>
+                        <p><%= book.category %></p>
+                        <form method="post" action="/review">
+                            <input type="hidden" name="bookId" value="<%= book.id %>">
+                            <button class="admin__button" type="submit">Valider</button>
+                        </form>
                     </div>
-                <% }); %>
-                <% } %>
-            </div>
+                    <% }); %>
+                        <% } %>
         </div>
+    </div>
     </div>
 </body>
 

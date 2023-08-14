@@ -19,7 +19,7 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="/" class="active">Home</a></li>
-                <li><a href="/selection">Ma sélection</a></li>
+                <li><a href="/selection">Liste</a></li>
                 <li><a href="/explore">Explorer</a></li>
                 <li><a href="">Contact</a></li>
                 <li>
@@ -101,12 +101,11 @@
                 </div>
             </div>
         <% } else { %>
-            <div class="box">
-                <div class="container">
-                    <h1 class="lettreBlanc">Veuillez vous connecter afin de voir votre sélection de livres</h1>
-                    <a class="button" href="/auth">Connexion</a>
+                <div class="container-not-user">
+                    <h1>Veuillez vous connecter afin de voir votre sélection de livres</h1>
+                    <br>
+                    <a  href="/auth">Connexion</a>
                 </div>
-            </div>
         <% } %>
     </div>
 

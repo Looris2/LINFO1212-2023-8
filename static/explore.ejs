@@ -21,7 +21,7 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/selection">Ma selection</a></li>
+                <li><a href="/selection">Liste</a></li>
                 <li><a href="" class="active">Explorer</a></li>
                 <li><a href="">Contact</a></li>
                 <li>
@@ -50,18 +50,14 @@
     </header>
 
     <div class="page">
-        <div class="container-list">
             <% if (user) { %>
                 <!-- Votre contenu lorsque l'utilisateur est connecté -->
             <% } else { %>
-                <% books.forEach(book => { %>
-                    <div class="container book">
-                        <h2><%= book.title %></h2>
-                        <p>Auteur: <%= book.author %></p>
-                        <p>Résumé: <%= book.summary %></p>
-                        <p>Catégorie: <%= book.category %></p>
-                    </div>
-                <% }); %>
+                <div class="container-not-user">
+                    <h1>Pour avoir accès à cette page, veuillez vous connecter ou vous inscrire</h1>
+                    <br>
+                    <a href="/">Connexion</a>
+                </div>
             <% } %>
         </div>
     </div>

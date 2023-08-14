@@ -44,20 +44,20 @@ app.get('/auth', function (req, res) {
     res.render(path.join(__dirname, 'static/auth.ejs'));
 });
 
-app.get('/selection', function (req, res) {
-     res.locals.user = req.user;
-    res.render(path.join(__dirname, 'static/selection.ejs'));
-});
-
-app.get('/explore', async function (req, res) {
+app.get('/selection', async function (req, res) {
     try {
         const books = await Book.findAll({ where: { validated: true } });
         res.locals.user = req.user;
-        res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
+        res.render(path.join(__dirname, 'static/selection.ejs'), { books: books });
     } catch (error) {
         console.error('Error fetching books:', error);
         res.status(500).send('Error fetching books');
     }
+});
+
+app.get('/explore', async function (req, res) {
+    res.locals.user = req.user;
+    res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
 });
 
 app.get('/review', async function (req, res) {

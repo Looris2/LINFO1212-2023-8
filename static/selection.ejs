@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
+
 <body>
     <header>
         <div class="logo">Belgoteek</div>
@@ -18,24 +20,28 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" >Home</a></li>
-                <li><a href="" class="active">Ma selection</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/selection" class="active">Liste</a></li>
                 <li><a href="/explore" >Explorer</a></li>
-                <li><a href="#basdepage" >Contact</a></li>
+                <li><a href="">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
-                        <% if ( typeof user !== 'undefined') { %>
-                            <a><%= user.username %></a>
-                            <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
-                        <% } else { %>
-                            <a href="/auth">Login</a>
-                        <% } %>
-                      </h4>
+                        <% if (typeof user !=='undefined' ) { %>
+                            <a>
+                                <%= user.username %>
+                            </a>
+                            <ul>
+                                <li><button onclick='location.href="/logout"'>Déconnexion</button></li>
+                            </ul>
+                            <% } else { %>
+                                <a href="/auth">Login</a>
+                                <% } %>
+                    </h4>
                 </li>
             </ul>
             <script>
                 hamburger = document.querySelector(".hamburger");
-                hamburger.onclick = function() {
+                hamburger.onclick = function () {
                     navBar = document.querySelector(".nav-bar")
                     navBar.classList.toggle("active");
                 }
@@ -44,20 +50,28 @@
     </header>
 
     <div class="page">
-        <% if(user){ %>
-            <h1>Bienvenue</h1>
-        <% }else{ %>
-            <div class="page">
-                <div class="box">
-                    <div class="container">
-                        <h1>Veuillez vous connecter afin de voir votre selection de livres</h1>
-
-                        <a href="/auth">Connexion</a>
-                    </div>
-                </div>
-            </div>
-        <% } %>
+        <div class="container-list">
+            <% if (user) { %>
+                <!-- Votre contenu lorsque l'utilisateur est connecté -->
+            <% } else { %>
+                    <h1>Liste des livres de la bibliothèque.</h1>
+                    <% books.forEach(book=> { %>
+                        <div class="container">
+                            <li>
+                                <h2><%= book.title %></h2>
+                                <p><%= book.author %></p>
+                                <br>
+                                <h3><%= book.summary %></h3>
+                                <br>
+                                <p><%= book.category %></p>
+                            </li>
+                      </div>
+                    <% }); %>
+            <% } %>
+        </div>
     </div>
+    
 
 </body>
+
 </html>

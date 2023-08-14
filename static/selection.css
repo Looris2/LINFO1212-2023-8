@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -13,7 +13,8 @@
   --border-radius: 4px;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -22,7 +23,8 @@ html, body {
 .page{
 
   margin: 0 auto;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   display: flex;
   align-items: left;
   justify-content: center;
@@ -33,26 +35,36 @@ html, body {
 
 }
 
-  .container {
-    position: flex;
-    vertical-align: middle;
-    max-width: 600px;
-    margin: 200px auto;
-    padding: 3rem;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-    border-radius: var(--border-radius);
-    background-color: #ffffffb3;
-    text-align:center;
+.container{
+  position:flex;
+  float: left;
+  vertical-align:bottom;
+
+  width:100%;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #ffffff;
 }
 
-.container a{
+.container h2{
   color: #AA2A2A;
-  font-size: 25px;
 }
 
-.box {
-    position: fixed;
-    border-color: #36478d;
-    
-    margin: 5rem;
+.container-list{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  float: left;
+  vertical-align:auto;
+  align-items:center;
+  width:auto;
+  height: auto;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #e1e1e1;
+
 }
