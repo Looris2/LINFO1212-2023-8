@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/admin.css">
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
@@ -48,23 +48,28 @@
             </script>
         </nav>
     </header>
-
     <div class="page">
-        <% if (typeof user !== 'undefined' && user.role === 'bibliothécaire') { %>
-          <h2>Suggestions de Livres</h2>
-          <% books.forEach(book => { %>
-            <div class="book-suggestion">
-              <h3><%= book.title %></h3>
-              <p><%= book.summary %></p>
-              <form method="post" action="/review">
-                <input type="hidden" name="bookId" value="<%= book.id %>">
-                <button type="submit">Valider</button>
-              </form>
+        <div class="container-list">
+            <div class="container">
+                <% if (typeof user !== 'undefined' && user.role === 'bibliothécaire') { %>
+                <h2>Suggestions de Livres</h2>
+                <% books.forEach(book => { %>
+                    <div class="book-suggestion">
+                    <h3><%= book.title %></h3>
+                    <p><%= book.summary %></p>
+                    <form method="post" action="/review">
+                        <input type="hidden" name="bookId" value="<%= book.id %>">
+                        <button type="submit">Valider</button>
+                    </form>
+                    </div>
+                <% }); %>
+                <% } %>
             </div>
-          <% }); %>
-        <% } %>
-      </div>
-
+            <div class="container"></div>
+            <div class="container"></div>
+            <div class="container"></div>
+        </div>
+    </div>
 </body>
 
 </html>
