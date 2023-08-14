@@ -55,10 +55,30 @@ app.get('/selection', async function (req, res) {
     }
 });
 
+
 app.get('/explore', async function (req, res) {
-    res.locals.user = req.user;
-    res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
+    try {
+        const books = await Book.findAll({ where: { validated: true } });
+        res.locals.user = req.user;
+        res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
+    } catch (error) {
+        console.error('Error fetching books:', error);
+        res.status(500).send('Error fetching books');
+    }
 });
+
+app.get('/book', async function (req, res) {
+    try {
+        const userBooks = await Book.findAll({ where: { renterId: req.user.email } });
+        res.locals.user = req.user;
+        res.render(path.join(__dirname, 'static/book.ejs'), { userBooks: userBooks });
+    } catch (error) {
+        console.error('Error fetching user books:', error);
+        res.status(500).send('Error fetching user books');
+    }
+});
+
+
 
 app.get('/review', async function (req, res) {
     res.locals.user = req.user;
@@ -76,7 +96,7 @@ app.get('/review', async function (req, res) {
       // Bibliothécaire valide un livre
       const bookId = req.body.bookId;
       await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email, true);
-      res.redirect("/admin");
+      res.redirect("/selection");
     }
   });
   
@@ -89,6 +109,56 @@ app.get('/review', async function (req, res) {
     } catch (error) {
       console.error('Error fetching books:', error);
       res.status(500).send('Error fetching books');
+    }
+  });
+
+  app.post('/validate', async (req, res) => {
+    const bookId = req.body.bookId; // Récupérer l'ID du livre depuis le formulaire
+    
+    try {
+        // Recherche du livre par son ID dans la base de données
+        const book = await db.Book.findByPk(bookId);
+        
+        if (book) {
+            // Mettre à jour le champ 'validated' du livre à 'true'
+            await book.update({ validated: true });
+            console.log('Book validated:', bookId);
+        }
+        
+        res.redirect('/admin'); // Redirige vers la page admin après la validation réussie
+    } catch (error) {
+        console.error('Error validating book:', error);
+        res.status(500).send('Error validating book');
+    }
+});
+
+
+  app.post('/rent', async (req, res) => {
+    const bookId = req.body.bookId;
+    const duration = req.body.duration;
+  
+    try {
+      const book = await Book.findByPk(bookId);
+      if (!book.rented) {
+        const rentStartDate = new Date();
+        const rentEndDate = new Date(rentStartDate);
+        rentEndDate.setDate(rentEndDate.getDate() + (duration * 7));
+  
+        await book.update({
+          rented: true,
+          renterId: req.user.email,
+          rentStartDate: rentStartDate,
+          rentDuration: duration
+        });
+  
+        res.redirect('/selection');
+      } else {
+        // Livre déjà loué
+        res.redirect('/selection');
+      }
+    } catch (error) {
+      console.error('Error renting book:', error);
+      res.status(500).send('Error renting book');
     }
   });
   

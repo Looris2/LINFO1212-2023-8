@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/selection.css">
+    <link rel="stylesheet" href="/book.css">
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
@@ -21,8 +21,8 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/selection" class="active">Liste</a></li>
-                <li><a href="/explore" >Explorer</a></li>
+                <li><a href="/selection">Liste</a></li>
+                <li><a href="" class="active">Explorer</a></li>
                 <li><a href="">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
@@ -51,47 +51,27 @@
 
     <div class="page">
         <div class="container-list">
-            <% if (user) { %>
-                <% books.forEach(book => { %>
-                    <div class="container">
-                      <li>
+        <h1>Livres loués par <%= user.username %></h1>
+        <div class="container">
+        <% if (userBooks.length > 0) { %>
+            <ul>
+                <% userBooks.forEach(book => { %>
+                    <li>
                         <h2><%= book.title %></h2>
                         <p><%= book.author %></p>
                         <br>
                         <h3><%= book.summary %></h3>
                         <br>
                         <p><%= book.category %></p>
-                        <% if (!book.rented) { %>
-                          <form action="/rent" method="post">
-                            <input type="hidden" name="bookId" value="<%= book.id %>">
-                            <label for="duration">Durée de location (semaines) :</label>
-                            <input type="number" name="duration" min="2" max="6" required>
-                            <button type="submit">Louer</button>
-                          </form>
-                        <% } else { %>
-                          <p>Livre loué jusqu'au <%= book.rentStartDate %></p>
-                        <% } %>
-                      </li>
-                    </div>
-                  <% }); %>
-                  
-            <% } else { %>
-                    <h1>Liste des livres de la bibliothèque.</h1>
-                    <% books.forEach(book=> { %>
-                        <div class="container">
-                            <li>
-                                <h2><%= book.title %></h2>
-                                <p><%= book.author %></p>
-                                <br>
-                                <h3><%= book.summary %></h3>
-                                <br>
-                                <p><%= book.category %></p>
-                            </li>
-                      </div>
-                    <% }); %>
-            <% } %>
+                    </li>
+                <% }); %>
+            </ul>
         </div>
+        <% } else { %>
+            <p>Aucun livre n'a été loué pour le moment.</p>
+        <% } %>
     </div>
+</div>
     
 
 </body>

@@ -60,7 +60,7 @@
                         <h3><%= book.summary %></h3>
                         <br>
                         <p><%= book.category %></p>
-                        <form method="post" action="/review">
+                        <form method="post" action="/validate">
                             <input type="hidden" name="bookId" value="<%= book.id %>">
                             <button class="admin__button" type="submit">Valider</button>
                         </form>

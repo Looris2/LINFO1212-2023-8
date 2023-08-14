@@ -94,6 +94,12 @@ body {
   background-color: #ffffff;
 }
 
+.title{
+  font-size: 2rem;
+  text-align:justify;
+  margin: auto auto;
+}
+
 .welcome-message {
   color:#ffffff;
   background-color: #AA2A2A;
@@ -120,6 +126,19 @@ body {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius);
   background-color: #ffffff;
+}
+
+.cadre-right a {
+  width: 30%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  margin: auto auto;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
 }
 
 .index__input{
@@ -161,36 +180,24 @@ body {
   transform: scale(0.98);
 }
 
-.cadre-on{
-  background-color: #AA2A2A;
-  height: 100px;
+.container-on{
+  margin: auto auto;
+  align-self: end;
+}
+
+.container-on li a {
+  display:inline-flex;
   width: auto;
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  margin-right: 50px;
 
-}
-
-.cadre-on ul {
-  display: flex;
-  padding-top: 40px;
-}
-
-.cadre-on ul li{
-  display: inline-flex;
-  margin: 0 3rem;
   color: #ffffff;
-  font-weight: bold; /* Ajout du style en gras */
-}
-
-.stats{
-  padding-top: 122px;
-}
-
-.stats h2{
-  padding: 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
 }
 
 .container-not-user{

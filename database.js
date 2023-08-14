@@ -56,6 +56,23 @@ const Book = sequelize.define('Book', {
     type: Sequelize.DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false 
+  },
+  rented: {
+    type: Sequelize.DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  renterId: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: true
+  },
+  rentStartDate: {
+    type: Sequelize.DataTypes.DATE,
+    allowNull: true
+  },
+  rentDuration: {
+    type: Sequelize.DataTypes.INTEGER,
+    allowNull: true
   }
 }, 
 {});

@@ -50,17 +50,13 @@
                     <div class="welcome-message">
                         <h1>Bienvenue <%= user.username %> !</h1>
                     </div>
-                    <h2>Cliquez sur <a href="/review">"Review"</a> afin de suggérer un nouveau livre à la bibliothèque</h2>
-                    <div class="stats">
-                        <h2>Vos statistiques :</h2>
-                        <div class="cadre-on">
-                            <ul>
-                                <li>Livres : 3</li>
-                                <li>Aimés : 2</li>
-                                <li>Finis : 3</li>
-                                <li>En attente : 10</li>
-                            </ul>
-                        </div>
+                    <h2 class="title">Belgoteek est une bibliothèque en ligne qui permet de louer des livres pour une durée de 2 a 6 semaines</h2>
+                    <div class="container-on">
+                        <li>
+                            <a href="/review">Review</a>
+                            <a href="/book">Vos livres</a>
+                            <a href="/suggestion">vos suggestions</a>
+                        </li>
                     </div>
                 </div>
                 <div class="cadre-right">
@@ -81,23 +77,21 @@
                     <div class="welcome-message">
                         <h1>Bienvenue <%= user.username %> !</h1>
                     </div>
-                    <h2>Cliquez sur <a href="/review">"Review"</a> afin de suggérer un nouveau livre à la bibliothèque</h2>
-                    <div class="stats">
-                        <h2>Vos statistiques :</h2>
-                        <div class="cadre-on">
-                            <ul>
-                                <li>Livres : 3</li>
-                                <li>Aimés : 2</li>
-                                <li>Finis : 3</li>
-                                <li>En attente : 10</li>
-                            </ul>
-                        </div>
+                    <h2 class="title">Belgoteek est une bibliothèque en ligne qui permet de louer des livres pour une durée de 2 a 6 semaines</h2>
+                    <div class="container-on">
+                        <li>
+                            <a href="/review">Review</a>
+                            <a href="/book">Vos livres</a>
+                            <a href="/suggestion">vos suggestions</a>
+                        </li>
                     </div>
                 </div>
                 <div class="cadre-right">
-                    <h1>Belgoteek</h1>
+                    <h1>Bibliothécaire</h1>
                     <br>
-                    <h2>Cliquez<a href="/admin">ici</a>pour que vous soyez rediriger sur la page admin</h2>
+                    <h2>Pour avoir acces a la page "admin" cliquez en sur le boutton en dessous</h2>
+                    <br>
+                    <a href="/admin">Admin</a>
                 </div>
             </div>
         <% } else { %>
