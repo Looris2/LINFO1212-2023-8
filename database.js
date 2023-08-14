@@ -66,10 +66,10 @@ module.exports = {
   getUser: async function (email) {
     return await User.findOne({where: { email: email }});
   },
-  pushBook: async function (title, author, desc, gnr, email) {
-    const newBook = await Book.create({ title: title, author: author, summary: desc,category: gnr, Email: email});
-    console.log('New Song was saved to the database!');
-  },
+  pushBook: async function (title, author, desc, gnr, email, validated = false) {
+    const newBook = await Book.create({ title: title, author: author, summary: desc, category: gnr, Email: email, validated: validated });
+    console.log('New book saved on database!');
+},
   Book,
   User,
   sequelize

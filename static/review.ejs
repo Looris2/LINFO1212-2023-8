@@ -79,7 +79,9 @@
                             </div><br>
                           </select><br>
                           <br>
-                        <button class="review__button" type="submit">Suggérer le livre</button>
+                          <input type="hidden" name="bookId" value="<%= bookId || '' %>">
+                          <input type="hidden" name="role" value="<%= user.role || '' %>">
+                          <button class="review__button" type="submit">Suggérer le livre</button>
                     </form>
                 </div>
                 </div>

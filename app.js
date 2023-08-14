@@ -60,10 +60,12 @@ app.get('/explore', async function (req, res) {
     }
 });
 
-app.get('/review', function (req, res) {
+app.get('/review', async function (req, res) {
     res.locals.user = req.user;
-   res.render(path.join(__dirname, 'static/review.ejs'));
+    const bookId = req.query.bookId; // Récupérez la valeur de bookId depuis la requête
+    res.render(path.join(__dirname, 'static/review.ejs'), { bookId: bookId }); // Passez la valeur à la vue
 });
+
 
  app.post('/review', async (req, res) => {
     if (req.user.role === 'normal') {
@@ -73,7 +75,7 @@ app.get('/review', function (req, res) {
     } else if (req.user.role === 'bibliothécaire') {
       // Bibliothécaire valide un livre
       const bookId = req.body.bookId;
-      await Book.update({ validated: true }, { where: { id: bookId } });
+      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email, true);
       res.redirect("/admin");
     }
   });
