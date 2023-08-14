@@ -50,23 +50,20 @@
     </header>
 
     <div class="page">
-        <% if(user){ %>
-
-            <% }else{ %>
-                <% books.forEach(book=> { %>
-                    <div class="book">
-                        <h2>
-                            <%= book.title %>
-                        </h2>
-                        <p>Auteur: <%= book.author %>
-                        </p>
-                        <p>Résumé: <%= book.summary %>
-                        </p>
-                        <p>Catégorie: <%= book.category %>
-                        </p>
-                    </div>
-                    <% }) %>
+        <% if (user) { %>
+            <!-- Votre contenu lorsque l'utilisateur est connecté -->
+        <% } else { %>
+            <% books.forEach(book => { %>
+                <div class="book">
+                    <h2><%= book.title %></h2>
+                    <p>Auteur: <%= book.author %></p>
+                    <p>Résumé: <%= book.summary %></p>
+                    <p>Catégorie: <%= book.category %></p>
+                </div>
+            <% }); %>
+        <% } %>
     </div>
+    
 
 </body>
 
