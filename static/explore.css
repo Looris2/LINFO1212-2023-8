@@ -35,6 +35,109 @@ body {
 
 }
 
+.container{
+  position:flex;
+  float: left;
+  vertical-align:bottom;
+
+  width:100%;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #ffffff;
+}
+
+.container h2{
+  color: #AA2A2A;
+}
+
+.container-list{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  float: left;
+  vertical-align:auto;
+  align-items:center;
+  width:auto;
+  height: auto;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #ffffff9d;
+
+}
+
+.container a{
+  width: 30%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
+}
+
+.container-list{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  float: left;
+  vertical-align:auto;
+  align-items:center;
+  width:auto;
+  height: auto;
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background-color: #ffffff9d;
+
+}
+
+.search-container {
+  display:inline-flex;
+  align-items:center;
+  margin-top: auto;
+}
+
+.search-container  h3{
+  color:black;
+  text-align: center;
+  font-weight: bold;
+}
+
+.search-container input[type="text"] {
+  flex: 2;
+  padding: 15px 150px;
+  margin-left: 150px;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  background: #f2f2f2;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.search-container button[type="submit"] {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-left: 15px;
+}
+
+.search-container button[type="submit"]:hover {
+  background: var(--color-primary-dark);
+}
+
+
 .container-not-user{
   position:flex;
   float: left;

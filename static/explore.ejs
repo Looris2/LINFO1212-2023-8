@@ -21,8 +21,7 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/selection">Liste</a></li>
-                <li><a href="" class="active">Explorer</a></li>
+                <li><a href="/explore" class="active">Explorer</a></li>
                 <li><a href="">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
@@ -50,17 +49,63 @@
     </header>
 
     <div class="page">
+        <div class="container-list">
             <% if (user) { %>
-                <!-- Votre contenu lorsque l'utilisateur est connecté -->
+                <% if (books.length > 0) { %>
+                    <h2>Résultats de la recherche :</h2>
+                    <ul >
+                        <% for (const book of books) { %>
+                            <div class="container">
+                            <li>
+                                <h2><%= book.title %></h2>
+                                <p><%= book.author %></p>
+                                <br>
+                                <h3><%= book.summary %></h3>
+                                <br>
+                                <p><%= book.category %></p>
+                                <br>
+                                <p>Suggérer par : <%= book.suggestedEmail %></p>
+                                <br>
+                                <p>Valider par : <%= book.librarianId %></p>
+                                <br>
+                                <% if (!book.rented) { %>
+                                    <form action="/rent" method="post">
+                                      <input type="hidden" name="bookId" value="<%= book.id %>">
+                                      <label for="duration">Durée de location (semaines) :</label>
+                                      <input type="number" name="duration" min="2" max="6" required>
+                                      <button type="submit">Louer</button>
+                                    </form>
+                                  <% } else { %>
+                                    <p>Livre loué jusqu'au <%= book.rentStartDate %></p>
+                                  <% } %>
+                            </li>
+                            </div>
+                        <% } %>
+                    </ul>
+                <% } else { %>
+                    <p>Aucun livre trouvé.</p>
+                <% } %>
             <% } else { %>
-                <div class="container-not-user">
-                    <h1>Pour avoir accès à cette page, veuillez vous connecter ou vous inscrire</h1>
-                    <br>
-                    <a href="/">Connexion</a>
-                </div>
-            <% } %>
-        </div>
+                <h1>Liste des livres de la bibliothèque.</h1>
+                <% books.forEach(book=> { %>
+                    <div class="container">
+                        <li>
+                            <h2><%= book.title %></h2>
+                            <p><%= book.author %></p>
+                            <br>
+                            <h3><%= book.summary %></h3>
+                            <br>
+                            <p><%= book.category %></p>
+                            <br>
+                            <p>Suggérer par : <%= book.suggestedEmail %></p>
+                            <br>
+                            <p>Valider par : <%= book.librarianId %></p>
+                        </li>
+                  </div>
+                <% }); %>
+        <% } %>
     </div>
+</div>
     
 
 </body>

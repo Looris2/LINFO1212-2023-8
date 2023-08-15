@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const { Sequelize, DataTypes, Model, Op } = require('sequelize');
 const passport = require('passport');
 const app = express()
 const path = require('path');
@@ -44,28 +45,40 @@ app.get('/auth', function (req, res) {
     res.render(path.join(__dirname, 'static/auth.ejs'));
 });
 
-app.get('/selection', async function (req, res) {
-    try {
-        const books = await Book.findAll({ where: { validated: true } });
-        res.locals.user = req.user;
-        res.render(path.join(__dirname, 'static/selection.ejs'), { books: books });
-    } catch (error) {
-        console.error('Error fetching books:', error);
-        res.status(500).send('Error fetching books');
-    }
-});
 
 
 app.get('/explore', async function (req, res) {
-    try {
-        const books = await Book.findAll({ where: { validated: true } });
-        res.locals.user = req.user;
-        res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
-    } catch (error) {
-        console.error('Error fetching books:', error);
-        res.status(500).send('Error fetching books');
-    }
+  try {
+      const searchQuery = req.query.search;
+      let books;
+      
+      if (searchQuery) {
+          // Rechercher des livres par auteur ou titre (insensible à la casse)
+          books = await Book.findAll({
+              where: {
+                  [Op.or]: [
+                      { author: { [Op.substring]: `%${searchQuery}%` } },
+                      { title: { [Op.substring]: `%${searchQuery}%` } },
+                      { category: { [Op.substring]: `%${searchQuery}%` } },
+                      { suggestedEmail: { [Op.substring]: `%${searchQuery}%` } }
+                  ],
+                  validated: true
+              }
+          });
+      } else {
+          // Si aucune recherche n'est effectuée, afficher tous les livres validés
+          books = await Book.findAll({ where: { validated: true } });
+      }
+      
+      res.locals.user = req.user;
+      res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
+  } catch (error) {
+      console.error('Error fetching books:', error);
+      res.status(500).send('Error fetching books');
+  }
 });
+
+
 
 app.get('/book', async function (req, res) {
     try {
@@ -91,12 +104,12 @@ app.get('/review', async function (req, res) {
     if (req.user.role === 'normal') {
       // Utilisateur normal suggère un livre
       await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email);
-      res.redirect("/selection");
+      res.redirect("/");
     } else if (req.user.role === 'bibliothécaire') {
       // Bibliothécaire valide un livre
       const bookId = req.body.bookId;
       await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email, true);
-      res.redirect("/selection");
+      res.redirect("/");
     }
   });
   
@@ -156,9 +169,9 @@ app.get('/review', async function (req, res) {
           rentDuration: duration
         });
   
-        res.redirect('/selection');
+        res.redirect('/explore');
       } else {
-        res.redirect('/selection');   // Livre déjà loué
+        res.redirect('/explore');   // Livre déjà loué
       }
     } catch (error) {
       console.error('Error renting book:', error);

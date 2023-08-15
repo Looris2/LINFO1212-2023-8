@@ -19,7 +19,6 @@
         <nav class="nav-bar">
             <ul>
                 <li><a href="/" class="active">Home</a></li>
-                <li><a href="/selection">Liste</a></li>
                 <li><a href="/explore">Explorer</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li>
@@ -70,6 +69,12 @@
                         <button class="index__button" type="submit">Confirmer</button>
                     </form>
                 </div>
+                <div class="search-container">
+                    <form action="/explore" method="GET">
+                        <input type="text" name="search" placeholder="Rechercher par auteur ou titre...">
+                        <button type="submit">Rechercher</button>
+                    </form>
+                </div>
             </div>
         <% } else if(user && user.role === 'bibliothécaire') { %>
             <div class="box">
@@ -78,6 +83,18 @@
                         <h1>Bienvenue <%= user.username %> !</h1>
                     </div>
                     <h2 class="title">Belgoteek est une bibliothèque en ligne qui permet de louer des livres pour une durée de 2 a 6 semaines.</h2>
+                    <br>
+                    <div class="search-container">
+                        <form action="/explore" method="GET">
+                            <h3>Search Bar :</h3>
+                            <br>
+                            <input type="text" name="search" placeholder="Rechercher par auteur ou titre...">
+                            <button type="submit">Rechercher</button>
+                        </form>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
                     <div class="container-on">
                         <li>
                             <a href="/review">Review</a>
@@ -96,11 +113,23 @@
                 </div>
             </div>
         <% } else { %>
-                <div class="container-not-user">
-                    <h1>Veuillez vous connecter afin de voir votre sélection de livres.</h1>
+            <div class="container-wrapper">
+                <div class="container-not-user-1">
+                    <h1>Veuillez vous connecter afin de voir votre location de livres</h1>
                     <br>
                     <a class="button" href="/auth">Connexion</a>
                 </div>
+                    <div class="container-not-user-2">
+                    <h1>Vous pouvez toujours regarder la liste de nos livre dans <a href="/explore">Explorer</a> ou rechercher un livre en particulier a l'aide de la la barre de recherche juste en dessous</h1>
+                    <div class="search-container-not-user">
+                        <form action="/explore" method="GET">
+                            <br>
+                            <input type="text" name="search" placeholder="Rechercher par auteur ou titre...">
+                            <button type="submit">Rechercher</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         <% } %>
     </div>
 
