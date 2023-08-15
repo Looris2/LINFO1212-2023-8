@@ -12,10 +12,10 @@ Lancer le serveur :
  - sequelize doit être installé manuellement
 
 **Solutions :**
-*désinstaller le fichier existant pour chaque cas avant de le réinstaller
+*désinstaller le fichier existant pour chaque cas avant de le réinstaller*
  - rm ./node_modules/bcrypt
  - rm ./node_modules/sqlite3
- - rm ./node_modules/sequelize*
+ - rm ./node_modules/sequelize
 
  - npm install bcrypt
 
