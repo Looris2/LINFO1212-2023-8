@@ -53,9 +53,9 @@
                     <h2 class="title">Belgoteek est une bibliothèque en ligne qui permet de louer des livres pour une durée de 2 a 6 semaines</h2>
                     <div class="container-on">
                         <li>
-                            <a href="/review">Review</a>
-                            <a href="/book">Vos livres</a>
-                            <a href="/suggestion">vos suggestions</a>
+                            <a class="button" href="/review">Review</a>
+                            <a class="button" href="/book">Vos livres</a>
+                            <a class="button" href="/suggestion">vos suggestions</a>
                         </li>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div class="welcome-message">
                         <h1>Bienvenue <%= user.username %> !</h1>
                     </div>
-                    <h2 class="title">Belgoteek est une bibliothèque en ligne qui permet de louer des livres pour une durée de 2 a 6 semaines</h2>
+                    <h2 class="title">Belgoteek est une bibliothèque en ligne qui permet de louer des livres pour une durée de 2 a 6 semaines.</h2>
                     <div class="container-on">
                         <li>
                             <a href="/review">Review</a>
@@ -89,17 +89,17 @@
                 <div class="cadre-right">
                     <h2>Bibliothécaire</h2>
                     <br>
-                    <h2>Pour avoir acces a la page "admin" cliquez en sur le boutton en dessous</h2s>
+                    <h2>Pour avoir acces a la page "admin" cliquez en sur le boutton en dessous.</h2s>
                     <br>
                     <br>
-                    <a href="/admin">Admin</a>
+                    <a class="button" href="/admin">Admin</a>
                 </div>
             </div>
         <% } else { %>
                 <div class="container-not-user">
-                    <h1>Veuillez vous connecter afin de voir votre sélection de livres</h1>
+                    <h1>Veuillez vous connecter afin de voir votre sélection de livres.</h1>
                     <br>
-                    <a  href="/auth">Connexion</a>
+                    <a class="button" href="/auth">Connexion</a>
                 </div>
         <% } %>
     </div>
