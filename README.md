@@ -13,6 +13,10 @@ Lancer le serveur :
 
 **Solutions :**
 *désinstaller le fichier existant pour chaque cas avant de le réinstaller*
+ - rm ./node_modules/bcrypt
+ - rm ./node_modules/sqlite3
+ - rm ./node_modules/sequelize
+
  - npm install bcrypt
 
  - npm install sqlite3 --save
