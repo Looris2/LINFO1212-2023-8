@@ -61,6 +61,9 @@
                         <h3><%= book.summary %></h3>
                         <br>
                         <p><%= book.category %></p>
+                        <br>
+                        <p>Suggérer par : <%= book.suggestedEmail %></p>
+                        <br>
                         <% if (!book.rented) { %>
                           <form action="/rent" method="post">
                             <input type="hidden" name="bookId" value="<%= book.id %>">
@@ -86,6 +89,8 @@
                                 <h3><%= book.summary %></h3>
                                 <br>
                                 <p><%= book.category %></p>
+                                <br>
+                                <p>Suggérer par : <%= book.suggestedEmail %></p>
                             </li>
                       </div>
                     <% }); %>
