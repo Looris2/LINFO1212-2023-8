@@ -17,8 +17,4 @@ Lancer le serveur :
  - rm ./node_modules/sqlite3
  - rm ./node_modules/sequelize
 
- - npm install bcrypt
-
- - npm install sqlite3 --save
-
- - npm install sequelize --save
+ - npm install 
