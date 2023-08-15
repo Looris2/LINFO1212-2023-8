@@ -52,10 +52,10 @@
     <div class="page">
         <div class="container-list">
         <h1>Livres loués par <%= user.username %></h1>
-        <div class="container">
         <% if (userBooks.length > 0) { %>
             <ul>
                 <% userBooks.forEach(book => { %>
+                    <div class="container">
                     <li>
                         <h2><%= book.title %></h2>
                         <p><%= book.author %></p>
@@ -64,9 +64,9 @@
                         <br>
                         <p><%= book.category %></p>
                     </li>
+                </div>
                 <% }); %>
             </ul>
-        </div>
         <% } else { %>
             <p>Aucun livre n'a été loué pour le moment.</p>
         <% } %>

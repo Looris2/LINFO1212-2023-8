@@ -52,6 +52,10 @@ const Book = sequelize.define('Book', {
     type: Sequelize.DataTypes.STRING,
     allowNull: false
   },
+  suggestedEmail: {
+    type: Sequelize.DataTypes.STRING,
+    allowNull: true
+  },
   validated: {
     type: Sequelize.DataTypes.BOOLEAN,
     allowNull: false,
@@ -83,8 +87,8 @@ module.exports = {
   getUser: async function (email) {
     return await User.findOne({where: { email: email }});
   },
-  pushBook: async function (title, author, desc, gnr, email, validated = false) {
-    const newBook = await Book.create({ title: title, author: author, summary: desc, category: gnr, Email: email, validated: validated });
+  pushBook: async function (title, author, desc, gnr, suggestedEmail, validated = false) {
+    const newBook = await Book.create({ title: title, author: author, summary: desc, category: gnr, suggestedEmail: suggestedEmail, validated: validated });
     console.log('New book saved on database!');
 },
   Book,

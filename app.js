@@ -169,6 +169,17 @@ app.get('/review', async function (req, res) {
   app.get('/contact', async function (req, res) {
     res.render(path.join(__dirname, 'static/contact.ejs'));
 });
+
+app.get('/suggestion', async function (req, res) {
+  try {
+      const userBooks = await Book.findAll({ where: { validated: false, suggestedEmail: req.user.email  } });
+      res.locals.user = req.user;
+      res.render(path.join(__dirname, 'static/suggestion.ejs'), { userBooks: userBooks });
+  } catch (error) {
+      console.error('Error fetching user book suggestions:', error);
+      res.status(500).send('Error fetching user book suggestions');
+  }
+});
   
 
 app.post('/', async (req, res) => {

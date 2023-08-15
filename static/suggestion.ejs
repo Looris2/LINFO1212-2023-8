@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/suggestion.css">
     <link rel="stylesheet" href="/nav.css">
     <title>Index</title>
 </head>
@@ -20,10 +20,10 @@
         </div>
         <nav class="nav-bar">
             <ul>
-                <li><a href="/" >Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/selection">Liste</a></li>
-                <li><a href="/explore">Explorer</a></li>
-                <li><a href="">Contact</a></li>
+                <li><a href="/explore" class="active">Explorer</a></li>
+                <li><a href="/contact">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
                         <% if (typeof user !=='undefined' ) { %>
@@ -48,29 +48,32 @@
             </script>
         </nav>
     </header>
+
     <div class="page">
         <div class="container-list">
-            <h1>Suggestions de Livres</h1>
-            <% if (typeof user !=='undefined' && user.role==='bibliothécaire' ) { %>
-                <% books.forEach(book=> { %>
-                    <div class="container">
-                        <h2><%= book.title %></h2>
-                        <p><%= book.author %></p>
-                        <br>
-                        <h3><%= book.summary %></h3>
-                        <br>
-                        <p><%= book.category %></p>
-                        <form method="post" action="/validate">
-                            <input type="hidden" name="bookId" value="<%= book.id %>">
-                            <button class="admin__button" type="submit" name="action" value="validate">Valider</button>
-                            <button class="admin__button" type="submit" name="action" value="decline">Décliner</button>
-                        </form>
+            <h1>Livres suggérés par <%= user.username %></h1>
+            <% if (userBooks.length > 0) { %>
+                <ul>
+                    <% userBooks.forEach(book => { %>
+                        <div class="container">
+                        <li>
+                            <h2><%= book.title %></h2>
+                            <p><%= book.author %></p>
+                            <br>
+                            <h3><%= book.summary %></h3>
+                            <br>
+                            <p><%= book.category %></p>
+                        </li>
                     </div>
                     <% }); %>
-                        <% } %>
+                </ul>
+            <% } else { %>
+                <p>Aucun livre n'a été loué pour le moment.</p>
+            <% } %>
         </div>
     </div>
-    </div>
+    
+
 </body>
 
 </html>
