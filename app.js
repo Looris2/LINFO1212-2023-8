@@ -82,8 +82,8 @@ app.get('/book', async function (req, res) {
 
 app.get('/review', async function (req, res) {
     res.locals.user = req.user;
-    const bookId = req.query.bookId; // Récupérez la valeur de bookId depuis la requête
-    res.render(path.join(__dirname, 'static/review.ejs'), { bookId: bookId }); // Passez la valeur à la vue
+    const bookId = req.query.bookId; 
+    res.render(path.join(__dirname, 'static/review.ejs'), { bookId: bookId });
 });
 
 
@@ -113,24 +113,29 @@ app.get('/review', async function (req, res) {
   });
 
   app.post('/validate', async (req, res) => {
-    const bookId = req.body.bookId; // Récupérer l'ID du livre depuis le formulaire
-    
+    const bookId = req.body.bookId;
+    const action = req.body.action; // Récupérer l'action depuis le formulaire
+
     try {
-        // Recherche du livre par son ID dans la base de données
         const book = await db.Book.findByPk(bookId);
-        
+
         if (book) {
-            // Mettre à jour le champ 'validated' du livre à 'true'
-            await book.update({ validated: true });
-            console.log('Book validated:', bookId);
+            if (action === 'validate') {
+                await book.update({ validated: true });
+                console.log('Book validated:', bookId);
+            } else if (action === 'decline') {
+                await book.destroy(); // Supprimer le livre de la base de données
+                console.log('Book declined and removed:', bookId);
+            }
         }
-        
-        res.redirect('/admin'); // Redirige vers la page admin après la validation réussie
+
+        res.redirect('/admin');
     } catch (error) {
-        console.error('Error validating book:', error);
-        res.status(500).send('Error validating book');
+        console.error('Error processing book action:', error);
+        res.status(500).send('Error processing book action');
     }
 });
+
 
 
   app.post('/rent', async (req, res) => {
@@ -153,14 +158,17 @@ app.get('/review', async function (req, res) {
   
         res.redirect('/selection');
       } else {
-        // Livre déjà loué
-        res.redirect('/selection');
+        res.redirect('/selection');   // Livre déjà loué
       }
     } catch (error) {
       console.error('Error renting book:', error);
       res.status(500).send('Error renting book');
     }
   });
+
+  app.get('/contact', async function (req, res) {
+    res.render(path.join(__dirname, 'static/contact.ejs'));
+});
   
 
 app.post('/', async (req, res) => {

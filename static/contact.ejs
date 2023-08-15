@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/contacte.css">
+    <link rel="stylesheet" href="/nav.css">
+    <title>Index</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Belgoteek</div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/selection">Liste</a></li>
+                <li><a href="/explore">Explorer</a></li>
+                <li><a href="/contact" class="active">Contact</a></li>
+                <li>
+                    <h4 id="name-holder">
+                        <% if (typeof user !== 'undefined') { %>
+                            <a><%= user.username %></a>
+                            <ul><li><button onclick='location.href="/logout"'>Déconnexion</button></li></ul>
+                        <% } else { %>
+                            <a href="/auth">Login</a>
+                        <% } %>
+                    </h4>
+                </li>
+            </ul>
+            <script>
+                const hamburger = document.querySelector(".hamburger");
+                hamburger.onclick = function() {
+                    const navBar = document.querySelector(".nav-bar");
+                    navBar.classList.toggle("active");
+                };
+            </script>
+        </nav>
+    </header>
+
+    <div class="page">
+        <div class="container">
+            <h1>Une question ?</h1>
+            <h1>envoyez un mail a l'une des deux adresse mail ci dessous !</h1>
+            <li>
+                <p>dscdc</p>
+                <p>dzcfeffe</p>
+            </li>
+        </div>
+    </div>
+
+</body>
+</html>
