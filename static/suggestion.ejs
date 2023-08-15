@@ -22,7 +22,7 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/selection">Liste</a></li>
-                <li><a href="/explore" class="active">Explorer</a></li>
+                <li><a href="/explore">Explorer</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li>
                     <h4 id="name-holder">
@@ -51,7 +51,7 @@
 
     <div class="page">
         <div class="container-list">
-            <h1>Livres suggérés par <%= user.username %></h1>
+            <h1>Vos livres suggérés</h1>
             <% if (userBooks.length > 0) { %>
                 <ul>
                     <% userBooks.forEach(book => { %>
@@ -63,6 +63,8 @@
                             <h3><%= book.summary %></h3>
                             <br>
                             <p><%= book.category %></p>
+                            <br>
+                            <a href="/edit?bookId=<%= book.id %>">Modifier</a>
                         </li>
                     </div>
                     <% }); %>

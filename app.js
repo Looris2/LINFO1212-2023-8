@@ -121,8 +121,8 @@ app.get('/review', async function (req, res) {
 
         if (book) {
             if (action === 'validate') {
-                await book.update({ validated: true });
-                console.log('Book validated:', bookId);
+              await book.update({ validated: true, librarianId: req.user.email });
+              console.log('Book validated:', bookId);
             } else if (action === 'decline') {
                 await book.destroy(); // Supprimer le livre de la base de données
                 console.log('Book declined and removed:', bookId);
@@ -180,6 +180,48 @@ app.get('/suggestion', async function (req, res) {
       res.status(500).send('Error fetching user book suggestions');
   }
 });
+
+
+app.get('/edit', async function (req, res) {
+  try {
+      const bookId = req.query.bookId;
+      const book = await Book.findByPk(bookId);
+      if (book && book.suggestedEmail === req.user.email) {
+          res.locals.user = req.user;
+          res.render(path.join(__dirname, 'static/edit.ejs'), { book: book });
+      } else {
+          res.status(403).send("Accès interdit.");
+      }
+  } catch (error) {
+      console.error('Error fetching book for editing:', error);
+      res.status(500).send('Error fetching book for editing');
+  }
+});
+
+app.post('/edit', async (req, res) => {
+  try {
+      const bookId = req.body.bookId;
+      const title = req.body.title;
+      const author = req.body.author;
+      const desc = req.body.desc;
+      const gnr = req.body.gnr;
+      
+      const book = await Book.findByPk(bookId);
+      if (book && book.suggestedEmail === req.user.email) {
+          await book.update({
+              title: title,
+              author: author,
+              summary: desc,
+              category: gnr,
+          });
+          res.redirect('/suggestion');
+      }
+    } catch (error) {
+      console.error('Error editing book:', error);
+      res.status(500).send('Error editing book');
+  }
+});
+
   
 
 app.post('/', async (req, res) => {
