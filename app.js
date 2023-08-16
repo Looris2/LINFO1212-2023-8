@@ -6,6 +6,8 @@ const app = express()
 const path = require('path');
 const authroutes = require('./authroutes');
 const bodyParser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
 const auth = require('./auth');
 const db = require("./database.js");
 const { Book, Rating } = require("./database.js");
@@ -308,8 +310,11 @@ app.post('/', async (req, res) => {
         res.redirect('/');
     }
 });
-  
 
-app.listen(8080, () => {
-    console.log('Serveur démarré sur le port 8080');
-});
+https.createServer({
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+  passphrase: "ingi"
+}, app).listen(8080);
+
+console.log('Serveur démarré sur le port 8080');
