@@ -91,9 +91,48 @@ const Book = sequelize.define('Book', {
   rentDuration: {
     type: Sequelize.DataTypes.INTEGER,
     allowNull: true
+  },
+  likes: {
+    type: Sequelize.DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
 }, 
 {});
+
+const Rating = sequelize.define('Rating', {
+  id: {
+      type: Sequelize.DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+  },
+  isbn: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+      references: {
+          model: 'Books', // Nom de la table des livres
+          key: 'isbn'
+      }
+  },
+  userId: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+      references: {
+          model: 'Users', // Nom de la table des utilisateurs
+          key: 'email'
+      }
+  },
+  rating: {
+      type: Sequelize.DataTypes.INTEGER,
+      allowNull: false
+  },
+  review: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: true
+  },
+});
+
 
 
 
@@ -121,7 +160,21 @@ module.exports = {
     });
     console.log('New book saved on database!');
   },
-  
+  pushRating: async function (isbn, userId, rating, review, liked) {
+    try {
+        await Rating.create({
+            isbn: isbn,
+            userId: userId,
+            rating: rating,
+            review: review,
+            liked: liked
+        });
+        console.log('New rating saved in database!');
+    } catch (error) {
+        console.error('Error saving rating to database:', error);
+    }
+  },
+  Rating,
   Book,
   User,
   sequelize

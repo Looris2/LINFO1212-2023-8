@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    --color-primary: #AA2A2A;
+    --color-primary-dark: #b0050bfe;
+    --color-secondary: #36478d;
+    --color-error: #e21111;
+    --color-success: #37d85a;
+    --border-radius: 4px;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.page {
+
+    margin: 0 auto;
+    height: auto;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, .3)), url(images/bibli.jpg);
+    background-size: cover;
+}
+
+.container{
+    position: relative;
+    float: left;
+    vertical-align: middle;
+
+    width: 900px;
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    background-color: #ffffff;
+}
+
+.box {
+    position: relative;
+    border-color: #36478d;
+    
+    margin: 5rem;
+}
+.navbar-static-top
+
+
+.container,
+.rating__input,
+.rating__button{
+    font: 500 1rem 'Quicksand', sans-serif; 
+    
+}
+
+.rating__title{   
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.rating__input{
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+
+}
+
+.rating__textarea{
+    display: block;
+    width: 100%;
+    height: 300px;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.rating__textarea:focus{
+    border-color: var(--color-primary);
+    background: #fefefe;
+}
+
+.rating__textarea:focus{
+    border-color: var(--color-primary);
+    background: #fefefe;
+
+}
+
+select {
+    position:relative;
+  }
+
+select.rating__select {
+    appearance: none;
+    width: 10%;
+    height: 10%;
+    padding: 0.50rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 2px solid #dddddd;
+    outline: none;
+    background: var(--color-primary);
+    color: #ffffff; 
+    font-size: large;
+    transition: background 0.2s, border-color 0.2s;
+    margin-bottom: auto;
+}
+
+/*.form__input--error {
+    color: var(--color-error);
+    border-color: var(--color-error);
+
+}
+
+.form__input-error-message{
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-error);
+
+}*/
+
+.rating__button{
+    width: 100%;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+    background: var(--color-primary);
+}
+
+.rating__button:hover{
+    background: var(--color-primary-dark);
+
+}
+
+.rating__button:active{
+    transform: scale(0.98);
+}
+
+.rating__text{
+    text-align: center;
+
+}
+
+.rating__link{
+    color: var(--color-secondary);
+    text-decoration-skip: none;
+    cursor: pointer;
+
+}
+
+.rating__link:hover{
+    text-decoration: underline;
+
+}

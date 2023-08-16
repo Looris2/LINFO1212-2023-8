@@ -8,7 +8,7 @@ const authroutes = require('./authroutes');
 const bodyParser = require('body-parser');
 const auth = require('./auth');
 const db = require("./database.js");
-const { Book } = require("./database.js");
+const { Book, Rating } = require("./database.js");
 const LocalStrategy = require('passport-local').Strategy;
 
 app.use(express.static(path.join(__dirname, 'static')));
@@ -170,24 +170,77 @@ app.get('/review', async function (req, res) {
 
   app.post('/return', async (req, res) => {
     const ISBN = req.body.isbn;
-  
+
     try {
-      const book = await Book.findByPk(ISBN);
-      if (book && book.renterId === req.user.email) {
-        await book.update({
-          rented: false,
-          renterId: null,
-          rentStartDate: null,
-          rentEndDate: null,
-          rentDuration: null
-        });
-      }
-      res.redirect('/book');
+        const book = await Book.findByPk(ISBN);
+        if (book && book.renterId === req.user.email) {
+            await book.update({
+                rented: false,
+                renterId: null,
+                rentStartDate: null,
+                rentEndDate: null,
+                rentDuration: null
+            });
+        }
+        
+        // Rediriger vers la page de notation
+        res.redirect(`/rating?isbn=${ISBN}`);
     } catch (error) {
-      console.error('Error returning book:', error);
-      res.status(500).send('Error returning book');
+        console.error('Error returning book:', error);
+        res.status(500).send('Error returning book');
     }
-  });
+});
+
+app.get('/rating', async function (req, res) {
+  res.locals.user = req.user;
+  const ISBN = req.query.isbn; 
+  const book = await Book.findByPk(ISBN);
+  res.render(path.join(__dirname, 'static/rating.ejs'), { isbn: ISBN, book: book });
+});
+
+app.post('/rate', async (req, res) => {
+  const isbn = req.body.isbn;
+  const userId = req.user.email; 
+  const rating = req.body.rating;
+  const review = req.body.review;
+
+  try {
+    const newRating = await Rating.create({
+      isbn: isbn, 
+      userId: userId,
+      rating: rating,
+      review: review
+    });
+
+    await Book.increment('likes', { where: { isbn: isbn } });
+
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error creating rating:', error);
+    res.status(500).send('An error occurred while creating the rating.');
+  }
+});
+
+
+
+app.get('/rating_list', async function (req, res) {
+  try {
+      const ISBN = req.query.isbn;
+      const book = await Book.findByPk(ISBN);
+      if (!book) {
+          res.status(404).send('Livre non trouvé.');
+          return;
+      }
+
+      const ratings = await Rating.findAll({ where: { isbn: ISBN } });
+
+      res.render(path.join(__dirname, 'static/rating_list.ejs'), { book: book, ratings: ratings });
+  } catch (error) {
+      console.error('Error fetching ratings for book:', error);
+      res.status(500).send('Error fetching ratings for book');
+  }
+});
+
 
   app.get('/contact', async function (req, res) {
     res.render(path.join(__dirname, 'static/contact.ejs'));

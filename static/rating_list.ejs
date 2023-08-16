@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/explore.css">
+    <link rel="stylesheet" href="/nav.css">
+    <title>Avis</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">Belgoteek</div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/explore">Explorer</a></li>
+                <li><a href="">Contact</a></li>
+                <li>
+                    <h4 id="name-holder">
+                        <% if (typeof user !== 'undefined') { %>
+                            <a>
+                                <%= user.username %>
+                            </a>
+                            <ul>
+                                <li><button onclick='location.href="/logout"'>Déconnexion</button></li>
+                            </ul>
+                        <% } else { %>
+                            <a href="/auth">Login</a>
+                        <% } %>
+                    </h4>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page">
+        <div class="container-list">
+            <h2>Avis pour le livre : <%= book.title %></h2>
+            <ul>
+                <% for (const rating of ratings) { %>
+                    <div class="container">
+                        <li>
+                            <p>Utilisateur : <%= rating.userId %></p>
+                            <p>Note : <%= rating.rating %></p>
+                            <p>Avis : <%= rating.review %></p>
+                            <p>Aimé : <%= rating.liked ? 'Oui' : 'Non' %></p>
+                        </li>
+                    </div>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        hamburger = document.querySelector(".hamburger");
+        hamburger.onclick = function () {
+            navBar = document.querySelector(".nav-bar");
+            navBar.classList.toggle("active");
+        };
+    </script>
+
+</body>
+
+</html>

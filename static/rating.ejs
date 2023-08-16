@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/rating.css">
+    <link rel="stylesheet" href="/nav.css">
+    <title>Noter le Livre</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">Belgoteek</div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/explore">Explorer</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li>
+                    <h4 id="name-holder">
+                        <% if (typeof user !== 'undefined') { %>
+                            <a>
+                                <%= user.username %>
+                            </a>
+                            <ul>
+                                <li><button onclick='location.href="/logout"'>Déconnexion</button></li>
+                            </ul>
+                        <% } else { %>
+                            <a href="/auth">Login</a>
+                        <% } %>
+                    </h4>
+                </li>
+            </ul>
+            <script>
+                hamburger = document.querySelector(".hamburger");
+                hamburger.onclick = function () {
+                    navBar = document.querySelector(".nav-bar")
+                    navBar.classList.toggle("active");
+                }
+            </script>
+        </nav>
+    </header>
+
+    <div class="page">
+        <% if(user) { %>
+            <div class="box">
+                <div class="container">
+                    <h1 class="rating__title">Noter le Livre "<%= book.title %>" </h1>
+                    <form method="post" action="/rate">
+
+                        <label for="review">Avis:</label>
+                        <textarea class="rating__textarea" id="formfield" placeholder="Votre avis sur le livre..." name="review" rows="4"></textarea><br>
+
+                        <label for="rating">Note (de 1 à 10):</label>
+                        <input class="rating__input" type="number" id="formfield" name="rating" min="1" max="10" required><br>
+
+                        
+                        <label for="liked">Aimez-vous ce livre?</label>
+                        <select name="liked" required>
+                            <option value="yes">Oui</option>
+                            <option value="no">Non</option>
+                        </select>
+                        <br>
+                        <input type="hidden" name="isbn" value="<%= book.isbn %>">
+                        <button class="rating__button" type="submit">Soumettre la Note</button>
+                    </form>
+                </div>
+            </div>
+        <% } else { %>
+            <h2>Veuillez vous connecter pour noter ce livre.</h2>
+        <% } %>
+    </div>
+
+</body>
+
+</html>

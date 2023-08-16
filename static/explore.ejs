@@ -63,6 +63,11 @@
                                     <br>
                                     <p>Validé par : <%= book.librarianId %></p>
                                     <br>
+                                    <a href="/rating_list?isbn=<%= book.isbn %>">Voir les avis</a>
+                                    <br>
+                                    <br>
+                                    <p>Nombre de votes : <%= book.likes %></p>
+                                    <br>
                                     <% if (!book.rented) { %>
                                         <form action="/rent" method="post">
                                             <input type="hidden" name="isbn" value="<%= book.isbn %>">
@@ -104,6 +109,11 @@
                             <p>Suggéré par : <%= book.suggestedEmail %></p>
                             <br>
                             <p>Validé par : <%= book.librarianId %></p>
+                            <br>
+                            <a href="/rating_list?isbn=<%= book.isbn %>">Voir les avis</a>
+                            <br>
+                            <br>
+                            <p>Nombre de likes : <%= book.likes %></p>
                             <% if (!book.rented && user) { %>
                                 <form action="/rent" method="post">
                                     <input type="hidden" name="isbn" value="<%= book.isbn %>">
