@@ -37,7 +37,9 @@ module.exports = function (app, passport) {
           password: bcrypt.hashSync(req.body.password, salt),
         });
        console.log('New user created successfully!');
+       passport.authenticate('local')(req, res, function () {
         res.redirect('/');
+    });
       }
     } catch (error){
       console.error('Error creating user:', error.message);
