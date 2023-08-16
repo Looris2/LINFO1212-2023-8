@@ -103,10 +103,11 @@ body {
 .welcome-message {
   color:#ffffff;
   background-color: #AA2A2A;
-  width: 350px;
+  width: auto;
   padding: 10px;
-  text-align: left;
+  text-align: center;
   margin-bottom: 20px;
+  margin-right: auto;
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
