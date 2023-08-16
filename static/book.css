@@ -68,3 +68,17 @@ body {
   background-color: #ffffff9d;
 
 }
+
+.return__button{
+  width: 15%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  margin-left: auto;
+
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
+}

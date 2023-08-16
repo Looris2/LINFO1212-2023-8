@@ -168,6 +168,27 @@ app.get('/review', async function (req, res) {
     }
   });
 
+  app.post('/return', async (req, res) => {
+    const bookId = req.body.bookId;
+  
+    try {
+      const book = await Book.findByPk(bookId);
+      if (book && book.renterId === req.user.email) {
+        await book.update({
+          rented: false,
+          renterId: null,
+          rentStartDate: null,
+          rentEndDate: null,
+          rentDuration: null
+        });
+      }
+      res.redirect('/book');
+    } catch (error) {
+      console.error('Error returning book:', error);
+      res.status(500).send('Error returning book');
+    }
+  });
+
   app.get('/contact', async function (req, res) {
     res.render(path.join(__dirname, 'static/contact.ejs'));
 });
