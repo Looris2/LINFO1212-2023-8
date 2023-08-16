@@ -53,7 +53,7 @@ app.get('/explore', async function (req, res) {
       let books;
       
       if (searchQuery) {
-          // Rechercher des livres par auteur ou titre (insensible à la casse)
+          // Search bar
           books = await Book.findAll({
               where: {
                   [Op.or]: [
@@ -68,7 +68,7 @@ app.get('/explore', async function (req, res) {
               }
           });
       } else {
-          // Si aucune recherche n'est effectuée, afficher tous les livres validés
+        
           books = await Book.findAll({ where: { validated: true } });
       }
       
@@ -153,13 +153,13 @@ app.post('/review', async (req, res) => {
         res.status(500).send('Error deleting book');
       }
     } else {
-      res.redirect('/'); // Rediriger vers la page d'accueil si l'utilisateur n'est pas bibliothécaire
+      res.redirect('/'); 
     }
   });
 
   app.post('/validate', async (req, res) => {
     const ISBN = req.body.isbn;
-    const action = req.body.action; // Récupérer l'action depuis le formulaire
+    const action = req.body.action; 
 
     try {
         const book = await db.Book.findByPk(ISBN);

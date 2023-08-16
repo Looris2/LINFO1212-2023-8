@@ -12,7 +12,7 @@ module.exports = {
 
 //checker si l'user entre les bonnes informations
 passport.use(new LocalStrategy(
-  { usernameField: 'email' }, // Spécifiez que le champ 'email' est utilisé comme nom d'utilisateur
+  { usernameField: 'email' }, 
   async function (email, password, done) {
     try {
       const user = await getUser(email);
@@ -29,12 +29,11 @@ passport.use(new LocalStrategy(
   }
 ));
 
-//serializer le mdp du user
 passport.serializeUser(function (user, cb) {
   cb(null, user.email);
 });
   
-  //deserializer le mdp du user
+
   passport.deserializeUser(function (email, done) {
     User.findOne({ where: { email } })
       .then(user => {

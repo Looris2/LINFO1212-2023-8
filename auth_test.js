@@ -1,6 +1,5 @@
-const passport = require('./auth'); // Importez la configuration Passport
+const passport = require('./auth'); 
 
-// Fonction de test
 async function test() {
   try {
     const email = 'test@example.com'; 

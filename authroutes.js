@@ -39,7 +39,6 @@ module.exports = function (app, passport) {
           password: bcrypt.hashSync(req.body.password, salt),
         });
        console.log('New user created successfully!');
-       //redirige le nouv user vers la page home ou il est deja connecté
        passport.authenticate('local')(req, res, function () {
         res.redirect('/');
     });
