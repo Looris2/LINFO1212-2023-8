@@ -5,6 +5,7 @@ const passport = require('passport-local');
 const bcrypt = require('bcrypt');
 const { User } = require('./database');
 const {salt} = require('./auth');
+const { Book } = require("./database.js");
 
 module.exports = function (app, passport) {
 
@@ -37,6 +38,7 @@ module.exports = function (app, passport) {
           password: bcrypt.hashSync(req.body.password, salt),
         });
        console.log('New user created successfully!');
+       //redirige le nouv user vers la page home ou il est deja connecté
        passport.authenticate('local')(req, res, function () {
         res.redirect('/');
     });
@@ -56,5 +58,25 @@ module.exports = function (app, passport) {
       if (err) { return next("test",err); }
       res.redirect('/');
     });
+  });
+
+  //delete a book
+  app.post('/delete', async (req, res) => {
+    if (req.isAuthenticated() && req.user.role === 'bibliothécaire') {
+      const bookId = req.body.bookId;
+      try {
+        const book = await Book.findByPk(bookId);
+        if (book) {
+          await book.destroy(); // Supprimer le livre de la base de données
+          console.log('Book deleted:', bookId);
+        }
+        res.redirect('/explore'); 
+      } catch (error) {
+        console.error('Error deleting book:', error);
+        res.status(500).send('Error deleting book');
+      }
+    } else {
+      res.redirect('/'); // Rediriger vers la page d'accueil si l'utilisateur n'est pas bibliothécaire
+    }
   });
 }

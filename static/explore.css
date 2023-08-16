@@ -165,3 +165,30 @@ body {
   cursor: pointer;
   background: var(--color-primary);
 }
+
+.delete__button{
+  width: 10%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
+}
+
+.location__button{
+  width: 10%;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  margin-left: 20px;
+
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
+}
