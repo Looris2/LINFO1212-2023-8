@@ -60,7 +60,8 @@ app.get('/explore', async function (req, res) {
                       { author: { [Op.substring]: `%${searchQuery}%` } },
                       { title: { [Op.substring]: `%${searchQuery}%` } },
                       { category: { [Op.substring]: `%${searchQuery}%` } },
-                      { suggestedEmail: { [Op.substring]: `%${searchQuery}%` } }
+                      { suggestedEmail: { [Op.substring]: `%${searchQuery}%` } },
+                      { isbn: { [Op.eq]: parseInt(searchQuery) } } //cherche le bon ISBN
                   ],
                   validated: true
               }
@@ -97,22 +98,7 @@ app.get('/review', async function (req, res) {
     res.locals.user = req.user;
     const bookId = req.query.bookId; 
     res.render(path.join(__dirname, 'static/review.ejs'), { bookId: bookId });
-});
-
-
- app.post('/review', async (req, res) => {
-    if (req.user.role === 'normal') {
-      // Utilisateur normal suggère un livre
-      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email);
-      res.redirect("/");
-    } else if (req.user.role === 'bibliothécaire') {
-      // Bibliothécaire valide un livre
-      const bookId = req.body.bookId;
-      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.user.email, true);
-      res.redirect("/");
-    }
-  });
-  
+});  
 
   app.get('/admin', async function (req, res) {
     try {

@@ -61,6 +61,11 @@ const Book = sequelize.define('Book', {
     allowNull: false,
     defaultValue: false 
   },
+  isbn: {
+    type: Sequelize.DataTypes.INTEGER,
+    allowNull: true,
+    unique: true
+  },
   librarianId: {
     type: Sequelize.DataTypes.STRING,
     allowNull: true
@@ -91,10 +96,27 @@ module.exports = {
   getUser: async function (email) {
     return await User.findOne({where: { email: email }});
   },
-  pushBook: async function (title, author, desc, gnr, suggestedEmail, librarianId, validated = false) {
-    const newBook = await Book.create({ title: title, author: author, summary: desc, category: gnr, suggestedEmail: suggestedEmail,librarianId :librarianId, validated: validated });
+  pushBook: async function (title, author, desc, gnr, isbn, suggestedEmail, librarianId, validated = false) {
+    const existingBook = await Book.findOne({ where: { isbn: isbn } });
+  
+    if (existingBook) {
+      console.log('A book with the same ISBN already exists:', existingBook.title);
+      return; // Ne pas créer de nouveau livre avec le même ISBN
+    }
+
+    const newBook = await Book.create({
+      title: title,
+      author: author,
+      summary: desc,
+      category: gnr,
+      isbn: isbn,
+      suggestedEmail: suggestedEmail,
+      librarianId: librarianId,
+      validated: validated
+    });
     console.log('New book saved on database!');
-},
+  },
+  
   Book,
   User,
   sequelize

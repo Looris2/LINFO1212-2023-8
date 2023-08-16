@@ -3,6 +3,7 @@ const app = express();
 const bodyparser = require('body-parser');
 const passport = require('passport-local');
 const bcrypt = require('bcrypt');
+const db = require("./database.js");
 const { User } = require('./database');
 const {salt} = require('./auth');
 const { Book } = require("./database.js");
@@ -79,4 +80,18 @@ module.exports = function (app, passport) {
       res.redirect('/'); // Rediriger vers la page d'accueil si l'utilisateur n'est pas bibliothécaire
     }
   });
+
+  app.post('/review', async (req, res) => {
+    if (req.user.role === 'normal') {
+      // Utilisateur normal suggère un livre avec l'ISBN
+      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.body.isbn, req.user.email);
+      res.redirect("/");
+    } else if (req.user.role === 'bibliothécaire') {
+      // Bibliothécaire valide un livre avec l'ISBN
+      const bookId = req.body.bookId;
+      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.body.isbn, req.user.email, true);
+      res.redirect("/");
+    }
+  });
+  
 }
