@@ -1,16 +1,14 @@
 # LINFO1212-2023-8
 Ce projet comporte un site web de bibliothèque en ligne qui permet de louer des livres d'une durée de 2 a 6 semaines et d'en suggérer de nouveaux
 
-##Test
+Test :
 un compte est déjà créer
 adresse mail : tuteur@gmail.com
 mdp : ingi
 
-###Bibliothécaire
+Bibliothécaire :
 le mot de passe pour etre bilbiothécaire est :
 belgoteek
-
-
 
 
 Lancer le serveur :
