@@ -147,17 +147,19 @@ app.get('/review', async function (req, res) {
         const rentStartDate = new Date();
         const rentEndDate = new Date(rentStartDate);
         rentEndDate.setDate(rentEndDate.getDate() + (duration * 7));
+        const formattedRentEndDate = rentEndDate.toISOString().split('T')[0];
   
         await book.update({
           rented: true,
           renterId: req.user.email,
           rentStartDate: rentStartDate,
+          rentEndDate: formattedRentEndDate,
           rentDuration: duration
         });
   
         res.redirect('/explore');
       } else {
-        res.redirect('/explore');   // Livre déjà loué
+        res.redirect('/explore');   
       }
     } catch (error) {
       console.error('Error renting book:', error);

@@ -83,6 +83,10 @@ const Book = sequelize.define('Book', {
     type: Sequelize.DataTypes.DATE,
     allowNull: true
   },
+  rentEndDate:{
+    type: Sequelize.DataTypes.STRING,
+    allowNull: true
+  },
   rentDuration: {
     type: Sequelize.DataTypes.INTEGER,
     allowNull: true

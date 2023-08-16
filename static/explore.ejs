@@ -78,7 +78,7 @@
                                             </form>
                                         <% } %>
                                     <% } else { %>
-                                        <p>Livre loué jusqu'au <%= book.rentStartDate %></p>
+                                        <p>Livre loué jusqu'au <%= book.rentEndDate %></p>
                                     <% } %>
                                 </li>
                             </div>
@@ -104,6 +104,24 @@
                             <p>Suggéré par : <%= book.suggestedEmail %></p>
                             <br>
                             <p>Validé par : <%= book.librarianId %></p>
+                            <% if (!book.rented && user) { %>
+                                <form action="/rent" method="post">
+                                    <input type="hidden" name="bookId" value="<%= book.id %>">
+                                    <label for="duration">Durée de location (semaines) :</label>
+                                    <input type="number" name="duration" min="2" max="6" required>
+                                    <button class ="location__button" type="submit">Louer</button>
+                                </form>
+                                <br>
+                                <% if (user.role === 'bibliothécaire') { %>
+                                    <form action="/delete" method="post">
+                                        <input type="hidden" name="bookId" value="<%= book.id %>">
+                                        <button class ="delete__button" type="submit">Supprimer</button>
+                                    </form>
+                                <% } %>
+                            <% } else { %>
+                                <br>
+                                <p>Livre loué jusqu'au <%= book.rentEndDate %></p>
+                            <% } %>
                         </li>
                     </div>
                 <% }); %>
