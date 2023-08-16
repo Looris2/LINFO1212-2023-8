@@ -63,7 +63,7 @@ const Book = sequelize.define('Book', {
   },
   isbn: {
     type: Sequelize.DataTypes.STRING, 
-    allowNull: true,
+    allowNull: false,
     unique: true,
     primaryKey: true
   },
@@ -96,6 +96,11 @@ const Book = sequelize.define('Book', {
     type: Sequelize.DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
+  },
+  copies: {
+    type: Sequelize.DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 1 
   }
 }, 
 {});
@@ -140,7 +145,7 @@ module.exports = {
   getUser: async function (email) {
     return await User.findOne({where: { email: email }});
   },
-  pushBook: async function (title, author, desc, gnr, isbn, suggestedEmail, librarianId, validated = false) {
+  pushBook: async function (title, author, desc, gnr, isbn, suggestedEmail, librarianId, validated = false,copies) {
     const existingBook = await Book.findOne({ where: { isbn: isbn } });
   
     if (existingBook) {
@@ -153,10 +158,11 @@ module.exports = {
       author: author,
       summary: desc,
       category: gnr,
-      isbn: isbn.toString(),
       suggestedEmail: suggestedEmail,
       librarianId: librarianId,
-      validated: validated
+      validated: validated,
+      copies : copies,
+      isbn: isbn.toString()
     });
     console.log('New book saved on database!');
   },

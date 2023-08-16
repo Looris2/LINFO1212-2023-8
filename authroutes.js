@@ -60,38 +60,5 @@ module.exports = function (app, passport) {
       res.redirect('/');
     });
   });
-
-  //delete a book
-  app.post('/delete', async (req, res) => {
-    if (req.isAuthenticated() && req.user.role === 'bibliothécaire') {
-      const bookId = req.body.bookId;
-      try {
-        const book = await Book.findByPk(bookId);
-        if (book) {
-          await book.destroy(); // Supprimer le livre de la base de données
-          console.log('Book deleted:', bookId);
-        }
-        res.redirect('/explore'); 
-      } catch (error) {
-        console.error('Error deleting book:', error);
-        res.status(500).send('Error deleting book');
-      }
-    } else {
-      res.redirect('/'); // Rediriger vers la page d'accueil si l'utilisateur n'est pas bibliothécaire
-    }
-  });
-
-  app.post('/review', async (req, res) => {
-    if (req.user.role === 'normal') {
-      // Utilisateur normal suggère un livre avec l'ISBN
-      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.body.isbn, req.user.email);
-      res.redirect("/");
-    } else if (req.user.role === 'bibliothécaire') {
-      // Bibliothécaire valide un livre avec l'ISBN
-      const bookId = req.body.bookId;
-      await db.pushBook(req.body.title, req.body.author, req.body.desc, req.body.gnr, req.body.isbn, req.user.email, true);
-      res.redirect("/");
-    }
-  });
   
 }

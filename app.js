@@ -47,8 +47,6 @@ app.get('/auth', function (req, res) {
     res.render(path.join(__dirname, 'static/auth.ejs'));
 });
 
-
-
 app.get('/explore', async function (req, res) {
   try {
       const searchQuery = req.query.search;
@@ -103,6 +101,32 @@ app.get('/review', async function (req, res) {
     res.render(path.join(__dirname, 'static/review.ejs'), { isbn: ISBN });
 });  
 
+app.post('/review', async (req, res) => {
+  if (req.user.role === 'normal') {
+      await db.pushBook(
+          req.body.title,
+          req.body.author,
+          req.body.desc,
+          req.body.gnr,
+          req.body.isbn,
+          req.user.email
+      );
+      res.redirect("/");
+  } else if (req.user.role === 'bibliothécaire') {
+      await db.pushBook(
+          req.body.title,
+          req.body.author,
+          req.body.desc,
+          req.body.gnr,
+          req.body.isbn, 
+          req.user.email,
+          true
+      );
+      res.redirect("/");
+  }
+});
+
+
   app.get('/admin', async function (req, res) {
     try {
       const books = await Book.findAll({ where: { validated: false } });
@@ -111,6 +135,25 @@ app.get('/review', async function (req, res) {
     } catch (error) {
       console.error('Error fetching books:', error);
       res.status(500).send('Error fetching books');
+    }
+  });
+
+  app.post('/delete', async (req, res) => {
+    if (req.isAuthenticated() && req.user.role === 'bibliothécaire') {
+      const ISBN = req.body.isbn;
+      try {
+        const book = await Book.findByPk(ISBN);
+        if (ISBN) {
+          await book.destroy(); 
+          console.log('Book deleted:', ISBN);
+        }
+        res.redirect('/explore'); 
+      } catch (error) {
+        console.error('Error deleting book:', error);
+        res.status(500).send('Error deleting book');
+      }
+    } else {
+      res.redirect('/'); // Rediriger vers la page d'accueil si l'utilisateur n'est pas bibliothécaire
     }
   });
 
@@ -126,7 +169,7 @@ app.get('/review', async function (req, res) {
               await book.update({ validated: true, librarianId: req.user.email });
               console.log('Book validated:', ISBN);
             } else if (action === 'decline') {
-                await book.destroy(); // Supprimer le livre de la base de données
+                await book.destroy(); 
                 console.log('Book declined and removed:', ISBN);
             }
         }
@@ -140,58 +183,62 @@ app.get('/review', async function (req, res) {
 
 
 
-  app.post('/rent', async (req, res) => {
-    const ISBN = req.body.isbn;
-    const duration = req.body.duration;
-  
-    try {
-      const book = await Book.findByPk(ISBN);
-      if (!book.rented) {
-        const rentStartDate = new Date();
-        const rentEndDate = new Date(rentStartDate);
-        rentEndDate.setDate(rentEndDate.getDate() + (duration * 7));
-        const formattedRentEndDate = rentEndDate.toISOString().split('T')[0];
-  
-        await book.update({
-          rented: true,
-          renterId: req.user.email,
-          rentStartDate: rentStartDate,
-          rentEndDate: formattedRentEndDate,
-          rentDuration: duration
-        });
-  
-        res.redirect('/explore');
-      } else {
-        res.redirect('/explore');   
-      }
-    } catch (error) {
-      console.error('Error renting book:', error);
-      res.status(500).send('Error renting book');
+app.post('/rent', async (req, res) => {
+  const ISBN = req.body.isbn;
+  const duration = req.body.duration;
+
+  try {
+    const book = await Book.findByPk(ISBN);
+
+    if (book && book.copies > 0) {
+      const rentStartDate = new Date();
+      const rentEndDate = new Date(rentStartDate);
+      rentEndDate.setDate(rentEndDate.getDate() + (duration * 7));
+      const formattedRentEndDate = rentEndDate.toISOString().split('T')[0];
+
+      await book.update({
+        copies: book.copies - 1,
+        rented: true,
+        renterId: req.user.email,
+        rentStartDate: rentStartDate,
+        rentEndDate: formattedRentEndDate,
+        rentDuration: duration
+      });
+
+      res.redirect('/explore');
+    } else {
+      res.redirect('/explore');
     }
-  });
+  } catch (error) {
+    console.error('Error renting book:', error);
+    res.status(500).send('Error renting book');
+  }
+});
+
 
   app.post('/return', async (req, res) => {
     const ISBN = req.body.isbn;
-
+  
     try {
-        const book = await Book.findByPk(ISBN);
-        if (book && book.renterId === req.user.email) {
-            await book.update({
-                rented: false,
-                renterId: null,
-                rentStartDate: null,
-                rentEndDate: null,
-                rentDuration: null
-            });
-        }
-        
-        // Rediriger vers la page de notation
-        res.redirect(`/rating?isbn=${ISBN}`);
+      const book = await Book.findByPk(ISBN);
+      if (book && book.renterId === req.user.email) {
+        await book.update({
+          copies: book.copies + 1,
+          rented: false,
+          renterId: null,
+          rentStartDate: null,
+          rentEndDate: null,
+          rentDuration: null
+        });
+      }
+  
+      res.redirect('/');
     } catch (error) {
-        console.error('Error returning book:', error);
-        res.status(500).send('Error returning book');
+      console.error('Error returning book:', error);
+      res.status(500).send('Error returning book');
     }
-});
+  });
+  
 
 app.get('/rating', async function (req, res) {
   res.locals.user = req.user;
@@ -283,17 +330,19 @@ app.post('/edit', async (req, res) => {
       const author = req.body.author;
       const desc = req.body.desc;
       const gnr = req.body.gnr;
-      
+      const copies = req.body.copies; 
       const book = await Book.findByPk(ISBN);
+
       if (book && book.suggestedEmail === req.user.email) {
-          await book.update({
-              title: title,
-              author: author,
-              summary: desc,
-              category: gnr,
-          });
-          res.redirect('/suggestion');
-      }
+        if (action === 'edit') {
+          await book.update({title: title,author: author,summary: desc,category: gnr,copies: copies,});
+          console.log('Book edited:', ISBN);
+        } else if (action === 'decline') {
+            await book.destroy(); 
+            console.log('Book removed:' ,ISBN);
+          }
+        }
+          res.redirect('/');
     } catch (error) {
       console.error('Error editing book:', error);
       res.status(500).send('Error editing book');

@@ -62,6 +62,8 @@
                         <br>
                         <p><%= book.category %></p>
                         <br>
+                        <p>Copies disponibles: <%= book.copies %></p>
+                        <br>
                         <form method="post" action="/validate">
                             <input type="hidden" name="isbn" value="<%= book.isbn %>">
                             <button class="admin__button" type="submit" name="action" value="validate">Valider</button>

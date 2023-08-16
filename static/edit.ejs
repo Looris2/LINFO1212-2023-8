@@ -57,16 +57,20 @@
                     <input type="hidden" name="isbn" value="<%= book.isbn %>">
 
                     <label for="title">Titre:</label>
-                    <input class="review__input" type="text" id="title" placeholder="Titre du livre" name="title" value="<%= book.title %>" required><br>
+                    <input class="review__input" type="text" id="title" placeholder="Titre du livre" name="title" value="<%= book.title %>" ><br>
 
                     <label for="author">Auteur:</label>
-                    <input class="review__input" type="text" id="author" placeholder="Auteur" name="author" value="<%= book.author %>" required><br>
+                    <input class="review__input" type="text" id="author" placeholder="Auteur" name="author" value="<%= book.author %>" ><br>
 
                     <label for="desc">Description:</label>
-                    <input class="review__input__desc" type="text" id="desc" placeholder="Mots-clés" name="desc" maxlength ="" value="<%= book.summary %>" required><br>
+                    <input class="review__input__desc" type="text" id="desc" placeholder="Mots-clés" name="desc" maxlength ="" value="<%= book.summary %>" ><br>
                     <br>
 
-                    <select name="gnr" id="gnr" class="top  review__select" value="<%= book.category %>" required>
+                    <label for="copies">Nombre de copies:</label>
+                    <input class="review__input_copy" type="number" id="formfield" placeholder="Nombre de copies" name="copies" min="1" value ="<%= book.copies %>" ><br>
+                    <br>
+
+                    <select name="gnr" id="gnr" class="top  review__select" value="<%= book.category %>" >
                         <div class="select-list">
                           <option value="">Choissisez un genre</option>
                           <option value="Roman">Roman</option>
@@ -79,7 +83,11 @@
                         </div><br>
                       </select><br>
                       <br>
-                      <button class="review__button" type="submit">Modifier</button>
+                      <input type="hidden" name="isbn" value="<%= book.isbn %>">
+                      <button class="review__button" type="submit" name="action" value="edit">Modifier</button>
+                      <br>
+                      <br>
+                      <button class="review__button" type="submit" name="action" value="decline">Supprimer</button>
                 </form>
             </div>
             </div>
