@@ -54,7 +54,7 @@
             <h1 class="review__title">Modifier le livre suggéré</h1>
                 <form method="post" action="/edit">
 
-                    <input type="hidden" name="bookId" value="<%= book.id %>">
+                    <input type="hidden" name="isbn" value="<%= book.isbn %>">
 
                     <label for="title">Titre:</label>
                     <input class="review__input" type="text" id="title" placeholder="Titre du livre" name="title" value="<%= book.title %>" required><br>

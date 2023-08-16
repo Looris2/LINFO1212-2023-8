@@ -77,11 +77,12 @@
                               <option value="Horreur">Horreur</option>
                               <option value="Biographie">Biographie</option>
                               <option value="Auto">Auto-Biographie</option>
+                              <option value="Fable">Fable</option>
                               
                             </div><br>
                           </select><br>
                           <br>
-                          <input type="hidden" name="bookId" value="<%= bookId || '' %>">
+                          <input type="hidden" name="isbn" value="<%= isbn || '' %>">
                           <input type="hidden" name="role" value="<%= user.role || '' %>">
                           <button class="review__button" type="submit">Suggérer le livre</button>
                     </form>

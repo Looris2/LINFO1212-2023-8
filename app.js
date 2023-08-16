@@ -97,8 +97,8 @@ app.get('/book', async function (req, res) {
 
 app.get('/review', async function (req, res) {
     res.locals.user = req.user;
-    const bookId = req.query.bookId; 
-    res.render(path.join(__dirname, 'static/review.ejs'), { bookId: bookId });
+    const ISBN = req.query.isbn; 
+    res.render(path.join(__dirname, 'static/review.ejs'), { isbn: ISBN });
 });  
 
   app.get('/admin', async function (req, res) {
@@ -113,19 +113,19 @@ app.get('/review', async function (req, res) {
   });
 
   app.post('/validate', async (req, res) => {
-    const bookId = req.body.bookId;
+    const ISBN = req.body.isbn;
     const action = req.body.action; // Récupérer l'action depuis le formulaire
 
     try {
-        const book = await db.Book.findByPk(bookId);
+        const book = await db.Book.findByPk(ISBN);
 
         if (book) {
             if (action === 'validate') {
               await book.update({ validated: true, librarianId: req.user.email });
-              console.log('Book validated:', bookId);
+              console.log('Book validated:', ISBN);
             } else if (action === 'decline') {
                 await book.destroy(); // Supprimer le livre de la base de données
-                console.log('Book declined and removed:', bookId);
+                console.log('Book declined and removed:', ISBN);
             }
         }
 
@@ -139,11 +139,11 @@ app.get('/review', async function (req, res) {
 
 
   app.post('/rent', async (req, res) => {
-    const bookId = req.body.bookId;
+    const ISBN = req.body.isbn;
     const duration = req.body.duration;
   
     try {
-      const book = await Book.findByPk(bookId);
+      const book = await Book.findByPk(ISBN);
       if (!book.rented) {
         const rentStartDate = new Date();
         const rentEndDate = new Date(rentStartDate);
@@ -169,10 +169,10 @@ app.get('/review', async function (req, res) {
   });
 
   app.post('/return', async (req, res) => {
-    const bookId = req.body.bookId;
+    const ISBN = req.body.isbn;
   
     try {
-      const book = await Book.findByPk(bookId);
+      const book = await Book.findByPk(ISBN);
       if (book && book.renterId === req.user.email) {
         await book.update({
           rented: false,
@@ -207,8 +207,8 @@ app.get('/suggestion', async function (req, res) {
 
 app.get('/edit', async function (req, res) {
   try {
-      const bookId = req.query.bookId;
-      const book = await Book.findByPk(bookId);
+      const ISBN = req.query.isbn;
+      const book = await Book.findByPk(ISBN);
       if (book && book.suggestedEmail === req.user.email) {
           res.locals.user = req.user;
           res.render(path.join(__dirname, 'static/edit.ejs'), { book: book });
@@ -223,13 +223,13 @@ app.get('/edit', async function (req, res) {
 
 app.post('/edit', async (req, res) => {
   try {
-      const bookId = req.body.bookId;
+      const ISBN = req.body.isbn;
       const title = req.body.title;
       const author = req.body.author;
       const desc = req.body.desc;
       const gnr = req.body.gnr;
       
-      const book = await Book.findByPk(bookId);
+      const book = await Book.findByPk(ISBN);
       if (book && book.suggestedEmail === req.user.email) {
           await book.update({
               title: title,

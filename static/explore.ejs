@@ -65,7 +65,7 @@
                                     <br>
                                     <% if (!book.rented) { %>
                                         <form action="/rent" method="post">
-                                            <input type="hidden" name="bookId" value="<%= book.id %>">
+                                            <input type="hidden" name="isbn" value="<%= book.isbn %>">
                                             <label for="duration">Durée de location (semaines) :</label>
                                             <input type="number" name="duration" min="2" max="6" required>
                                             <button class ="location__button" type="submit">Louer</button>
@@ -73,7 +73,7 @@
                                         <br>
                                         <% if (user.role === 'bibliothécaire') { %>
                                             <form action="/delete" method="post">
-                                                <input type="hidden" name="bookId" value="<%= book.id %>">
+                                                <input type="hidden" name="isbn" value="<%= book.isbn %>">
                                                 <button class ="delete__button" type="submit">Supprimer</button>
                                             </form>
                                         <% } %>
@@ -106,7 +106,7 @@
                             <p>Validé par : <%= book.librarianId %></p>
                             <% if (!book.rented && user) { %>
                                 <form action="/rent" method="post">
-                                    <input type="hidden" name="bookId" value="<%= book.id %>">
+                                    <input type="hidden" name="isbn" value="<%= book.isbn %>">
                                     <label for="duration">Durée de location (semaines) :</label>
                                     <input type="number" name="duration" min="2" max="6" required>
                                     <button class ="location__button" type="submit">Louer</button>
@@ -114,7 +114,7 @@
                                 <br>
                                 <% if (user.role === 'bibliothécaire') { %>
                                     <form action="/delete" method="post">
-                                        <input type="hidden" name="bookId" value="<%= book.id %>">
+                                        <input type="hidden" name="isbn" value="<%= book.sibn %>">
                                         <button class ="delete__button" type="submit">Supprimer</button>
                                     </form>
                                 <% } %>

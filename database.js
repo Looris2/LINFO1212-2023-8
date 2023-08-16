@@ -62,9 +62,10 @@ const Book = sequelize.define('Book', {
     defaultValue: false 
   },
   isbn: {
-    type: Sequelize.DataTypes.INTEGER,
+    type: Sequelize.DataTypes.STRING, 
     allowNull: true,
-    unique: true
+    unique: true,
+    primaryKey: true
   },
   librarianId: {
     type: Sequelize.DataTypes.STRING,
@@ -113,7 +114,7 @@ module.exports = {
       author: author,
       summary: desc,
       category: gnr,
-      isbn: isbn,
+      isbn: isbn.toString(),
       suggestedEmail: suggestedEmail,
       librarianId: librarianId,
       validated: validated

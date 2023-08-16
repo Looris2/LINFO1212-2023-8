@@ -63,7 +63,7 @@
                         <p><%= book.category %></p>
                         <br>
                         <form method="post" action="/validate">
-                            <input type="hidden" name="bookId" value="<%= book.id %>">
+                            <input type="hidden" name="isbn" value="<%= book.isbn %>">
                             <button class="admin__button" type="submit" name="action" value="validate">Valider</button>
                             <button class="admin__button" type="submit" name="action" value="decline">Décliner</button>
                         </form>
