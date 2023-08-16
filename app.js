@@ -61,7 +61,8 @@ app.get('/explore', async function (req, res) {
                       { title: { [Op.substring]: `%${searchQuery}%` } },
                       { category: { [Op.substring]: `%${searchQuery}%` } },
                       { suggestedEmail: { [Op.substring]: `%${searchQuery}%` } },
-                      { isbn: { [Op.eq]: parseInt(searchQuery) } } //cherche le bon ISBN
+                      { isbn: searchQuery }
+
                   ],
                   validated: true
               }
