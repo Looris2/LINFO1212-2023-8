@@ -1,3 +1,4 @@
+// Module importer
 const express = require('express');
 const session = require('express-session');
 const { Sequelize, DataTypes, Model, Op } = require('sequelize');
@@ -13,30 +14,32 @@ const db = require("./database.js");
 const { Book, Rating } = require("./database.js");
 const LocalStrategy = require('passport-local').Strategy;
 
+//configuration Express
 app.use(express.static(path.join(__dirname, 'static')));
 app.set('view engine', 'ejs')
 
+// Configuration des paramètres de session
 app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
+    secret: 'keyboard cat', //définition cléf secrete pour signer les cookies de session
+    resave: false, 
+    saveUninitialized: false, 
+    cookie: { //configuration options cookies de session.
         path: "/",
         httpOnly: true,
-        maxAge: 3600000
+        maxAge: 3600000 //durée de vie cookie en sec => 1heure
     }
 }));
 
 app.use(bodyParser.json());
 app.use(express.static('static'))
 app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize());// Initialise le middleware Passport qui gère l'authentification dans l'application.
+app.use(passport.session());// Configure Passport pour gérer les sessions d'authentification.
 require('./authroutes.js')(app, passport);
 
 app.get('/', function (req, res) {
     res.locals.user = req.user;
-    res.render(path.join(__dirname, 'static/index.ejs'));
+    res.render(path.join(__dirname, 'static/index.ejs')); // Le chemin vers index.ejs
 });
 
 app.post('/auth', (req, res) => {
@@ -56,12 +59,12 @@ app.get('/explore', async function (req, res) {
           // Search bar
           books = await Book.findAll({
               where: {
-                  [Op.or]: [
-                      { author: { [Op.substring]: `%${searchQuery}%` } },
-                      { title: { [Op.substring]: `%${searchQuery}%` } },
+                  [Op.or]: [//OP.or == tableau combiné avec une logique ou. Cela signifie que si au moins l'une des conditions est vraie, elle sera incluse dans le résultat
+                      { author: { [Op.substring]: `%${searchQuery}%` } }, // [Op.substring] indique que l'on recherche une correspondance partielle dans le champs auteur
+                      { title: { [Op.substring]: `%${searchQuery}%` } },// `%${searchQuery}%` c'est la chaine que le user entre 
                       { category: { [Op.substring]: `%${searchQuery}%` } },
                       { suggestedEmail: { [Op.substring]: `%${searchQuery}%` } },
-                      { isbn: searchQuery }
+                      { isbn: searchQuery } // different car c'est une recherche exacte et non partielle on cherche l'isbn exacte et non la moitié de l'isbn !
 
                   ],
                   validated: true
@@ -69,14 +72,14 @@ app.get('/explore', async function (req, res) {
           });
       } else {
         
-          books = await Book.findAll({ where: { validated: true } });
+          books = await Book.findAll({ where: { validated: true } });// variable book récupère tous les enregistrements de la table "Book" qui ont été validés 
       }
       
       res.locals.user = req.user;
       res.render(path.join(__dirname, 'static/explore.ejs'), { books: books });
   } catch (error) {
       console.error('Error fetching books:', error);
-      res.status(500).send('Error fetching books');
+      res.status(500).send('Error fetching books');//status indique juste a l'user que quelque chose s'est mal passé coté serveur et que son action n'est pas valide/se realisera pas
   }
 });
 
@@ -84,9 +87,9 @@ app.get('/explore', async function (req, res) {
 
 app.get('/book', async function (req, res) {
     try {
-        const userBooks = await Book.findAll({ where: { renterId: req.user.email } });
+        const userBooks = await Book.findAll({ where: { renterId: req.user.email } });// variable userBooks récupère tous les enregistrements de la table "Book" où l'utilisateur actuellement authentifié est répertorié comme le locataire (renter) du livre
         res.locals.user = req.user;
-        res.render(path.join(__dirname, 'static/book.ejs'), { userBooks: userBooks });
+        res.render(path.join(__dirname, 'static/book.ejs'), { userBooks: userBooks });//données userBooks sont transmises pour cette page
     } catch (error) {
         console.error('Error fetching user books:', error);
         res.status(500).send('Error fetching user books');
@@ -97,7 +100,7 @@ app.get('/book', async function (req, res) {
 
 app.get('/review', async function (req, res) {
     res.locals.user = req.user;
-    const ISBN = req.query.isbn; 
+    const ISBN = req.query.isbn; //récupère la valeur du paramètre de requête "isbn" de la requête HTTP en cours 
     res.render(path.join(__dirname, 'static/review.ejs'), { isbn: ISBN });
 });  
 
@@ -142,9 +145,9 @@ app.post('/review', async (req, res) => {
     if (req.isAuthenticated() && req.user.role === 'bibliothécaire') {
       const ISBN = req.body.isbn;
       try {
-        const book = await Book.findByPk(ISBN);
+        const book = await Book.findByPk(ISBN); //findByPk sert a faire une recherche dans la db en fonction de sa clé primaire
         if (ISBN) {
-          await book.destroy(); 
+          await book.destroy();  //detruit le livre 
           console.log('Book deleted:', ISBN);
         }
         res.redirect('/explore'); 
@@ -159,14 +162,14 @@ app.post('/review', async (req, res) => {
 
   app.post('/validate', async (req, res) => {
     const ISBN = req.body.isbn;
-    const action = req.body.action; 
+    const action = req.body.action; // recupere l'action qu'a fait le user soit 'validate' ou 'decline'
 
     try {
         const book = await db.Book.findByPk(ISBN);
 
         if (book) {
             if (action === 'validate') {
-              await book.update({ validated: true, librarianId: req.user.email });
+              await book.update({ validated: true, librarianId: req.user.email }); // modifie le livre
               console.log('Book validated:', ISBN);
             } else if (action === 'decline') {
                 await book.destroy(); 
@@ -185,7 +188,7 @@ app.post('/review', async (req, res) => {
 
 app.post('/rent', async (req, res) => {
   const ISBN = req.body.isbn;
-  const duration = req.body.duration;
+  const duration = req.body.duration; //recupere la durée 2->6 semaines
 
   try {
     const book = await Book.findByPk(ISBN);
@@ -194,7 +197,7 @@ app.post('/rent', async (req, res) => {
       const rentStartDate = new Date();
       const rentEndDate = new Date(rentStartDate);
       rentEndDate.setDate(rentEndDate.getDate() + (duration * 7));
-      const formattedRentEndDate = rentEndDate.toISOString().split('T')[0];
+      const formattedRentEndDate = rentEndDate.toISOString().split('T')[0]; //met en forme la durée 
 
       await book.update({
         copies: book.copies - 1,
@@ -261,7 +264,7 @@ app.post('/rate', async (req, res) => {
       review: review
     });
 
-    await Book.increment('likes', { where: { isbn: isbn } });
+    await Book.increment('likes', { where: { isbn: isbn } }); // augmente de 1 le like pour le livre correspond a l'isbn
 
     res.redirect('/');
   } catch (error) {
@@ -310,7 +313,7 @@ app.get('/suggestion', async function (req, res) {
 app.get('/edit', async function (req, res) {
   try {
       const ISBN = req.query.isbn;
-      const book = await Book.findByPk(ISBN);
+      const book = await Book.findByPk(ISBN); // recupere un livre en fonction de son ISBN
       if (book && book.suggestedEmail === req.user.email) {
           res.locals.user = req.user;
           res.render(path.join(__dirname, 'static/edit.ejs'), { book: book });
@@ -360,7 +363,8 @@ app.post('/', async (req, res) => {
     }
 });
 
-https.createServer({
+// crée serveur HTTPS sécurisé
+https.createServer({ 
   key: fs.readFileSync('./key.pem'),
   cert: fs.readFileSync('./cert.pem'),
   passphrase: "ingi"
