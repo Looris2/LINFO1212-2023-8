@@ -2,7 +2,7 @@
 Ce projet comporte un site web de bibliothèque en ligne qui permet de louer des livres d'une durée de 2 a 6 semaines et d'en suggérer de nouveaux
 
 Test :
-deux comptes sont déjà créer
+deux comptes sont déjà créés
 compte 1:
 adresse mail : tuteur@gmail.com (bibliothécaire)
 mdp : ingi
